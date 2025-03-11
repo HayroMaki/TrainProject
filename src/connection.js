@@ -1,24 +1,35 @@
-const mongoose = require('mongoose');
-const express = require("express");
-const cors = require("cors");
+import express from "express";
+import cors from "cors";
+import { MongoClient } from "mongodb";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
-app.use(express.json());
+const PORT = 5000;
+
+// Middleware
 app.use(cors());
-app.use(express.static("public"));
+app.use(express.json()); // Pour traiter les requêtes JSON
 
-const uri = 'mongodb://localhost:27017/Exo'
+// Connexion MongoDB
+const username = process.env.MY_USERNAME;
+const password = process.env.MY_PASSWORD;
 
-mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-    .then(() => console.log('Connexion à MongoDB réussie !'))
-    .catch(err => console.error('Erreur de connexion à MongoDB : ', err));
+const client = new MongoClient(`mongodb+srv://${username}:${password}@jules-renaud-grange.uuold.mongodb.net/`);
+await client.connect();
+const db = client.db("test");
 
-const userSchema = new mongoose.Schema({
-    nom: String,
-    age: Number
+// Route pour insérer un utilisateur
+app.post("/api/insertClient", async (req, res) => {
+    try {
+        const { name, age } = req.body;
+        await db.collection("users").insertOne({ name, age });
+        res.status(201).json({ message: "Utilisateur inséré !" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 });
 
-const User = mongoose.model('User', userSchema);
+// Démarrage du serveur
+app.listen(PORT, () => console.log(`Serveur démarré`));
