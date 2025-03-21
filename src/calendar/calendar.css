@@ -1,0 +1,54 @@
+.CalendarDisplayer {
+    display: flex;
+    border-radius: 10px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #242424;
+    background-color: white;
+    color: #242424;
+}
+
+.CalendarMonthDisplayer {
+    display: flex;
+    width: 100%;
+    padding: 0.1em 0;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    border-bottom: 1px solid #242424;
+}
+
+.MonthChanger {
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    padding: 8px;
+    margin: 0 0.3em;
+    background-color: white;
+    color: #242424;
+    border: 1px solid #242424;
+    transition: all 0.3s ease-in-out;
+}
+
+.MonthChanger:hover {
+    background-color: #797979;
+}
+
+.MonthName {
+    font-size: 1.25em;
+}
+
+th {
+    font-weight: normal;
+    text-align: center;
+    color: grey;
+    padding: 0.5em 1em
+}
+
+td {
+    text-align: center;
+}

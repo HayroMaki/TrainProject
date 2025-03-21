@@ -1,19 +1,9 @@
-//import { useState } from "react";
-
-import {Route, HashRouter as Router, Routes } from "react-router-dom";
-
-import Connection from "./pages/Connection.tsx";
+import {CalendarDisplayer} from "./calendar/CalendarDisplayer.tsx";
 
 function App() {
     return (
-        <main>
-            <Router>
-                <Routes>
-                    <Route path="/Connect" element={<Connection/>} />
-                </Routes>
-            </Router>
-        </main>
-    )
+        <CalendarDisplayer />
+    );
 }
 
 export default App;
