@@ -29,7 +29,7 @@ export const CalendarDisplayer = () => {
     return (
         <div className="CalendarDisplayer">
             <CalendarMonthDisplayer month={month} year={year} monthChangeHandler={monthChangeHandler} />
-            <CalendarContent month={month} />
+            <CalendarContent month={month} year={year} />
         </div>
     )
 }
