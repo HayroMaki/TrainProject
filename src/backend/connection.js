@@ -18,7 +18,7 @@ const password = process.env.MY_PASSWORD;
 
 const client = new MongoClient(`mongodb+srv://${username}:${password}@jules-renaud-grange.uuold.mongodb.net/`);
 await client.connect();
-const db = client.db("test");
+const db = client.db("swiftrail");
 
 // Route pour insérer un utilisateur
 app.post("/api/insertClient", async (req, res) => {
