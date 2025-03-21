@@ -21,13 +21,11 @@ function App() {
     return (
         <form onSubmit={event => {
             event.preventDefault();
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-expect-error
-            const name = document.getElementById("name").value;
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-expect-error
-            const age = document.getElementById("age").value;
-            insertClient(name, age);
+
+            const name = document.getElementById("name") as HTMLInputElement;
+            const ageInput = document.getElementById("age") as HTMLInputElement;
+            const age = parseInt(ageInput.value);
+            insertClient(name.value, age);
         }}>
             <input type={"text"} id={"name"} required />
             <input type={"number"} id={"age"} required />
