@@ -1,14 +1,12 @@
 import {Route, HashRouter as Router, Routes } from 'react-router-dom';
 
-import Cart from "./pages/Cart.tsx";
-import Form from "./pages/form.tsx";
+import {Connection} from "./pages/Connection.tsx";
 
 function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Form/>}/>
-                <Route path="/cart" element={<Cart/>}/>
+                <Route path="/" element={<Connection />}/>
             </Routes>
         </Router>
     );

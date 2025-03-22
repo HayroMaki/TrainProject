@@ -61,15 +61,11 @@ export const CalendarContent = (props: {
                 calendarDays.map((week, i) => {
                     return (
                         <tr key={i}>
-                            {
-                                week.map((day, j) => {
-                                    return (
-                                        <td key={j}>
-                                            {day}
-                                        </td>
-                                    )
-                                })
-                            }
+                            { week.map((day, j) => {
+                                return (
+                                    <td key={j}>{day}</td>
+                                )
+                            })}
                         </tr>
                     )
                 })
