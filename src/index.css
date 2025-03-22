@@ -1,4 +1,5 @@
 @import "stylesheets/ConnectionForm.css";
+@import "stylesheets/Header.css";
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
