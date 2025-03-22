@@ -2,10 +2,8 @@ export default interface Travel {
     train_ref: string;
     departure: string;
     arrival: string;
-    departure_date: string;
-    departure_time: string;
-    arrival_date: string;
-    arrival_time: string;
+    date: string;
+    time: string;
+    length : number;
     price: number;
-    seat: string;
 }

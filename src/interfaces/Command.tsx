@@ -6,4 +6,5 @@ export default interface Command {
     validation_date: string|null;
     options : Option[];
     travel_info: Travel;
+    seat: string;
 }

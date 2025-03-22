@@ -1,9 +1,13 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * Form component for handling travel information input.
  */
-function Form() {
+export const Form = () => {
+
+    const navigate = useNavigate();
+
     // State variables
     const [isRoundTrip, setIsRoundTrip] = useState(false); // Tracks if the trip is round trip
     const [departureDate, setDepartureDate] = useState(''); // Stores the departure date
@@ -37,9 +41,8 @@ function Form() {
      * Validates the input data and logs the form data if valid.
      * @param {Event} event - The form submission event.
      */
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-
         const currentDate = new Date();
         const selectedDepartureDate = new Date(departureDate);
 
@@ -76,15 +79,13 @@ function Form() {
             arrival,
         };
 
-        // Log the form data to the console (for demonstration purposes)
-        console.log(formData);
-
         // Example of how to send the form data to an API (commented out)
-        // const response = await fetch("http://localhost:5000/api/insertClient", {
-        //     method: "POST",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify({ name: name, age: age }),
-        // });
+        await fetch("http://localhost:5000/api/insertTravels", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ data: formData }),
+        });
+        navigate('/travels');
     };
 
     return (
@@ -181,5 +182,3 @@ function Form() {
         </form>
     );
 }
-
-export default Form;
