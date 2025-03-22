@@ -98,3 +98,7 @@
 .submit-button:hover {
   background-color: var(--teal);
 }
+
+.error-message {
+  color: #ff5e5e;
+}
