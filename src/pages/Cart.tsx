@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import TicketsDisplayer from "../ticketComponents/TicketsDisplayer";
+import React, {useState} from "react";
+import TicketsDisplayer from "../components/ticketComponents/TicketsDisplayer";
 import Command from "../interfaces/Command";
 import "../stylesheets/Cart.css";
+import {Option} from "../interfaces/Option.tsx";
 
 const exampleData: Command[] = [
     {
         validated: false,
         validation_date: null,
-        options: ["Place tranquille", "Prise électrique"],
+        options: [Option.PLA_TRA, Option.BAG_SUP],
         travel_info: {
             train_ref: "TGV123",
             departure: "Paris Gare de Lyon",
@@ -23,7 +24,7 @@ const exampleData: Command[] = [
     {
         validated: false,
         validation_date: null,
-        options: ["Bagage supplémentaire", "Garantie annulation", "Place tranquille", "Prise électrique", "Information par SMS"],
+        options: [Option.PLA_TRA, Option.BAG_SUP, Option.GAR_ANN, Option.PRI_ELE, Option.INF_SMS],
         travel_info: {
             train_ref: "TGV5678",
             departure: "Lyon Part-Dieu",

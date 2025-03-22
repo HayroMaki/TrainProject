@@ -18,6 +18,10 @@
   --white: #F6F4F0;
 }
 
+body {
+  margin: 0;
+}
+
 .form-container {
   display: flex;
   flex-direction: column;
