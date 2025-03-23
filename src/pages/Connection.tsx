@@ -1,7 +1,12 @@
 import React, {useEffect} from "react";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
+import {useUserContext} from "../components/UserContext.tsx";
+import User from "../interfaces/User.tsx";
 
 export const Connection = () => {
+
+    const { setUser, setConnected } = useUserContext();
+    const navigate = useNavigate();
 
     const mailRegex = /^[\w.]+@\w+\.\w+/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{12,}$/;
@@ -34,8 +39,18 @@ export const Connection = () => {
                     })
                 })
 
-                const data = await response.json();
-                console.log(data);
+                if (response.status === 200) {
+                    // Authentificated successfully
+                    setConnected(true);
+                    const user: User = await response.json();
+                    setUser(user);
+                    navigate("/");
+
+                } else {
+                    // Failed authentification
+
+                }
+
             } catch (error) {
                 console.log(error);
             }

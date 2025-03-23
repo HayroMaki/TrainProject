@@ -68,7 +68,31 @@ app.post("/api/checkUser", async (req, res) => {
         }
         const value = await bcrypt.compare(pwd, document.password);
         if (value) {
-            res.status(200).json({ message: "Connecté avec succès !" });
+
+            if (document.bank_info) {
+                res.status(200).json({
+                    email: document.email,
+                    fname: document.first_name,
+                    lname: document.last_name,
+                    cart: document.cart,
+                    commands: document.commands,
+                    subscription: document.subscription,
+                    creation_date: document.creation_date,
+                    bank_info: document.bank_info
+                });
+            } else {
+                res.status(200).json({
+                    email: document.email,
+                    fname: document.first_name,
+                    lname: document.last_name,
+                    cart: document.cart,
+                    commands: document.commands,
+                    subscription: document.subscription,
+                    creation_date: document.creation_date,
+                    bank_info: {}
+                });
+            }
+
         } else {
             res.status(401).json({ message: "Erreur lors de l'authentification"} );
         }
