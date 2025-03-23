@@ -8,6 +8,12 @@ interface TicketProps {
     removeItem: (commandIndex: number) => void;
 }
 
+const goodDuree = (minutes: number): string => {
+    const hours = Math.floor(minutes / 60);
+    const min = minutes % 60;
+    return `${hours}h ${min}min`;
+};
+
 const Ticket: React.FC<TicketProps> = ({ command, index, removeOption, removeItem }) => {
     return (
         <div className="cart-item">
@@ -15,7 +21,7 @@ const Ticket: React.FC<TicketProps> = ({ command, index, removeOption, removeIte
                 <h3>🚆 {command.travel_info.train_ref} - {command.travel_info.departure} → {command.travel_info.arrival}</h3>
                 <p><strong>Date :</strong> {command.travel_info.date}</p>
                 <p><strong>Heure :</strong> {command.travel_info.time}</p>
-                <p><strong>Durée :</strong> {command.travel_info.length} min</p>
+                <p><strong>Durée :</strong> {goodDuree(command.travel_info.length)}</p>
                 <p><strong>Siège :</strong> {command.seat}</p>
             </div>
 
