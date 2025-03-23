@@ -1,4 +1,3 @@
-import React from "react";
 import Ticket from "./Ticket.tsx";
 import Command from "../../interfaces/Command.tsx";
 
