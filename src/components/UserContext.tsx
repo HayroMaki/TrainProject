@@ -48,12 +48,11 @@ const exampleCart: Command[] = [
 
 const defaultUser:User = {
     email: "",
-    password: "",
     first_name: "",
     last_name: "",
     cart: exampleCart,
     commands: [],
-    subscription: null,
+    subscription: "",
     creation_date: "",
     bank_info: {
         first_name: "",
@@ -73,7 +72,6 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         if (user) {
             setUser({
                 email: user.email,
-                password: user.password,
                 first_name: user.first_name,
                 last_name: user.last_name,
                 cart: cart,

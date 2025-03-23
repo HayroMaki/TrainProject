@@ -1,7 +1,9 @@
 import React, {ChangeEvent, useEffect} from "react";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 
 export const Inscription = () => {
+
+    const navigate = useNavigate();
 
     const mailRegex = /^[\w.]+@\w+\.\w+/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{12,}$/;
@@ -84,8 +86,12 @@ export const Inscription = () => {
                     })
                 })
 
-                const data = await response.json();
-                console.log(data);
+                if (response.status === 201) {
+
+                    navigate("/connection")
+
+                }
+
             } catch (error) {
                 console.log(error);
             }
