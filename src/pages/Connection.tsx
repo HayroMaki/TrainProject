@@ -10,7 +10,6 @@ export const Connection = () => {
 
     return (
         <>
-            <Header user={null} />
             <form className="Connection-form" onSubmit={handleSubmit}>
                 <h2 className="Connection-form-title">Formulaire de connexion</h2>
                 <div className="Connection-form-container">
