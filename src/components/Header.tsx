@@ -6,7 +6,7 @@ export const Header = () => {
 
     return (
         <header className="App-header">
-            <NavLink to={"/"} className="App-header-left">SWIFTRAIL</NavLink>
+            <NavLink to={"/"} className="App-header-left">🚄 SWIFTRAIL</NavLink>
             { !connected ? (
                 <NavLink to={"/connection"} className="App-header-right">Se connecter</NavLink>
             ) : (
@@ -14,5 +14,4 @@ export const Header = () => {
             )}
         </header>
     )
-
 }
