@@ -54,7 +54,7 @@ const defaultUser:User = {
     cart: exampleCart,
     commands: [],
     subscription: null,
-    creation_date: "",
+    creation_date: new Date(),
     bank_info: {
         first_name: "",
         last_name: "",
