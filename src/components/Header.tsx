@@ -1,17 +1,16 @@
-import User from "../interfaces/User.tsx";
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
+import {useUserContext} from "./UserContext.tsx";
 
-export const Header = (props: {
-    user: User|null;
-}) => {
+export const Header = () => {
+    const {connected} = useUserContext();
 
     return (
         <header className="App-header">
-            <span className="App-header-left">SWIFTRAIL</span>
-            { props.user === null ? (
-                <button className="App-header-right">Se connecter</button>
+            <NavLink to={"/"} className="App-header-left">SWIFTRAIL</NavLink>
+            { !connected ? (
+                <NavLink to={"/connection"} className="App-header-right">Se connecter</NavLink>
             ) : (
-                <button className="App-header-right"><Link to="/Connection" >Voir les informations du profil</Link></button>
+                <NavLink to={"/cart"} className="App-header-right"><Link to="/connection" >Voir les informations du profil</Link></NavLink>
             )}
         </header>
     )

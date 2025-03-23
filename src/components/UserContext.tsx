@@ -2,6 +2,7 @@ import React, {createContext, useState, useContext, ReactNode} from "react";
 import User from "../interfaces/User.tsx";
 import Command from "../interfaces/Command.tsx";
 import {Option} from "../interfaces/Option.tsx";
+import {Header} from "./Header.tsx";
 
 // Définition du type pour le contexte User :
 interface UserContextType {
@@ -86,6 +87,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     return (
         <UserContext.Provider value={{user, setUser, connected, setConnected, setUserCart}}>
+            <Header/>
             {children}
         </UserContext.Provider>
     );
