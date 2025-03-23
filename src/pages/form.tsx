@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {Header} from "../components/Header.tsx";
 
 /**
  * Form component for handling travel information input.
@@ -91,99 +90,96 @@ export const Form = () => {
     };
 
     return (
-        <>
-            <Header user={null} />
-            <form className={"form-container"} onSubmit={handleSubmit}>
-                {/* Buttons to select trip type (one-way or round trip) */}
-                <div className={"row-container"}>
-                    <button
-                        id={"simple-button"}
-                        className={`travel-type-button ${!isRoundTrip ? 'selected' : ''}`}
-                        onClick={handleSimpleTrip}
-                        type="button"
-                    >
-                        One-way
-                    </button>
-                    <button
-                        id={"round-trip-button"}
-                        className={`travel-type-button ${isRoundTrip ? 'selected' : ''}`}
-                        onClick={handleRoundTrip}
-                        type="button"
-                    >
-                        Round trip
-                    </button>
+        <form className={"form-container"} onSubmit={handleSubmit}>
+            {/* Buttons to select trip type (one-way or round trip) */}
+            <div className={"row-container"}>
+                <button
+                    id={"simple-button"}
+                    className={`travel-type-button ${!isRoundTrip ? 'selected' : ''}`}
+                    onClick={handleSimpleTrip}
+                    type="button"
+                >
+                    One-way
+                </button>
+                <button
+                    id={"round-trip-button"}
+                    className={`travel-type-button ${isRoundTrip ? 'selected' : ''}`}
+                    onClick={handleRoundTrip}
+                    type="button"
+                >
+                    Round trip
+                </button>
+            </div>
+
+            {/* Input fields for departure and arrival dates */}
+            <div className={"row-container"}>
+                <div className={"input-container"}>
+                    <p className={"input-label"}>Departure date:</p>
+                    <input
+                        id={"input-departure-date-value"}
+                        className={"input-content"}
+                        type={"date"}
+                        required
+                        value={departureDate}
+                        onChange={(e) => setDepartureDate(e.target.value)}
+                    />
                 </div>
-
-                {/* Input fields for departure and arrival dates */}
-                <div className={"row-container"}>
-                    <div className={"input-container"}>
-                        <p className={"input-label"}>Departure date:</p>
-                        <input
-                            id={"input-departure-date-value"}
-                            className={"input-content"}
-                            type={"date"}
-                            required
-                            value={departureDate}
-                            onChange={(e) => setDepartureDate(e.target.value)}
-                        />
-                    </div>
-                    {/* Arrival date input is only shown for round trips */}
-                    <div id={"input-arrival-container"} className={"input-container"} style={{ display: isRoundTrip ? 'block' : 'none' }}>
-                        <p className={"input-label"}>Return date:</p>
-                        <input
-                            id={"input-arrival-date-value"}
-                            className={"input-content"}
-                            type={"date"}
-                            value={arrivalDate}
-                            onChange={(e) => setArrivalDate(e.target.value)}
-                        />
-                    </div>
+                {/* Arrival date input is only shown for round trips */}
+                <div id={"input-arrival-container"} className={"input-container"} style={{ display: isRoundTrip ? 'block' : 'none' }}>
+                    <p className={"input-label"}>Return date:</p>
+                    <input
+                        id={"input-arrival-date-value"}
+                        className={"input-content"}
+                        type={"date"}
+                        value={arrivalDate}
+                        onChange={(e) => setArrivalDate(e.target.value)}
+                    />
                 </div>
+            </div>
 
-                {/* Input fields for departure and arrival cities */}
-                <div className={"row-container"}>
-                    <div className={"input-container"}>
-                        <p className={"input-label"}>Departure:</p>
-                        <input
-                            id={"input-departure-value"}
-                            className={"input-content"}
-                            type={"text"}
-                            required
-                            value={departure}
-                            onChange={(e) => setDeparture(e.target.value)}
-                            list="cities-list"
-                        />
-                        <datalist id="cities-list">
-                            {cities.map((city, index) => (
-                                <option key={index} value={city} />
-                            ))}
-                        </datalist>
-                    </div>
-                    <div className={"input-container"}>
-                        <p className={"input-label"}>Arrival:</p>
-                        <input
-                            id={"input-arrival-value"}
-                            className={"input-content"}
-                            type={"text"}
-                            required
-                            value={arrival}
-                            onChange={(e) => setArrival(e.target.value)}
-                            list="cities-list"
-                        />
-                        <datalist id="cities-list">
-                            {cities.map((city, index) => (
-                                <option key={index} value={city} />
-                            ))}
-                        </datalist>
-                    </div>
+            {/* Input fields for departure and arrival cities */}
+            <div className={"row-container"}>
+                <div className={"input-container"}>
+                    <p className={"input-label"}>Departure:</p>
+                    <input
+                        id={"input-departure-value"}
+                        className={"input-content"}
+                        type={"text"}
+                        required
+                        value={departure}
+                        onChange={(e) => setDeparture(e.target.value)}
+                        list="cities-list"
+                    />
+                    <datalist id="cities-list">
+                        {cities.map((city, index) => (
+                            <option key={index} value={city} />
+                        ))}
+                    </datalist>
                 </div>
+                <div className={"input-container"}>
+                    <p className={"input-label"}>Arrival:</p>
+                    <input
+                        id={"input-arrival-value"}
+                        className={"input-content"}
+                        type={"text"}
+                        required
+                        value={arrival}
+                        onChange={(e) => setArrival(e.target.value)}
+                        list="cities-list"
+                    />
+                    <datalist id="cities-list">
+                        {cities.map((city, index) => (
+                            <option key={index} value={city} />
+                        ))}
+                    </datalist>
+                </div>
+            </div>
 
-                {/* Display error messages if any */}
-                {error && <p className={"error-message"}>{error}</p>}
+            {/* Display error messages if any */}
+            {error && <p className={"error-message"}>{error}</p>}
 
-                {/* Submit button */}
-                <button className={"submit-button"} type={"submit"}>Submit</button>
-            </form>
-        </>
+            {/* Submit button */}
+            <button className={"submit-button"} type={"submit"}>Submit</button>
+        </form>
     );
 }

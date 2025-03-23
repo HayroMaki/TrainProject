@@ -58,18 +58,27 @@ const travelSchema = new mongoose.Schema({
 const User = mongoose.model("User", userSchema);
 const Travel = mongoose.model("Travel", travelSchema);
 
-app.get("/api/checkUser", async (req, res) => {
+app.post("/api/checkUser", async (req, res) => {
     try {
         const { email, pwd } = req.body;
-        const document = await User.findOne({ email: data.email, password: data.password }).exec();
-        console.log(document);
+        const document = await User.findOne({ email: email }).exec();
+        if (!document) {
+            res.status(401).send({ message: "Erreur lors de l'authentification" })
+            return;
+        }
+        const value = await bcrypt.compare(pwd, document.password);
+        if (value) {
+            res.status(200).json({ message: "Connecté avec succès !" });
+        } else {
+            res.status(401).json({ message: "Erreur lors de l'authentification"} );
+        }
     } catch (error) {
         res.status(500).json({error: error.message});
     }
 })
 
 // Route pour insérer un utilisateur
-app.post("/api/insertClient", async (req, res) => {
+app.put("/api/insertClient", async (req, res) => {
     try {
         const { first_name, last_name, email, password } = req.body;
         const salt = await bcrypt.genSalt(saltRounds);

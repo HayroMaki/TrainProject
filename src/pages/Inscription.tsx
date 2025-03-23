@@ -1,10 +1,8 @@
 import React, {ChangeEvent, useEffect} from "react";
-import {Link} from "react-router-dom";
-import {Header} from "../components/Header.tsx";
+import {NavLink} from "react-router-dom";
 
 export const Inscription = () => {
 
-    // Visual indicators of when the input is correct
     const mailRegex = /^[\w.]+@\w+\.\w+/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{12,}$/;
 
@@ -35,6 +33,7 @@ export const Inscription = () => {
         })
     });
 
+    // Visual indicators of when the input is correct
     function checkCondition(e:ChangeEvent<HTMLInputElement>, condition: Function) {
         if (condition(e.target.value)) {
             e.currentTarget.classList.remove('is-invalid')
@@ -69,10 +68,11 @@ export const Inscription = () => {
             ! confirmpasswordCondition(confirmpassword.value)) {
             return;
         }
+
         const insertUser = async (fname: string, lname: string, mail: string, pwd: string) => {
             try {
                 const response = await fetch(`http://localhost:5000/api/insertClient`, {
-                    method: "POST",
+                    method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
                     },
@@ -95,40 +95,41 @@ export const Inscription = () => {
     }
 
     return (
-        <>
-            <Header user={null} />
-            <form className="Connection-form" onSubmit={handleSubmit}>
-                <h2 className="Connection-form-title">Formulaire d'inscription</h2>
-                <div className="Connection-form-container">
-                    <label className="Connection-form-label" htmlFor="fname">Prénom <sup className="required">*</sup></label>
-                    <input className="Connection-form-input" type="text" id="fname" placeholder="Jean-Pierre" required />
-                </div>
-                <div className="Connection-form-container">
-                    <label className="Connection-form-label" htmlFor="lname">Nom <sup className="required">*</sup></label>
-                    <input className="Connection-form-input" type="text" id="lname" placeholder="Caillou" required />
-                </div>
-                <div className="Connection-form-container">
-                    <label className="Connection-form-label" htmlFor="email">Adresse mail <sup className="required">*</sup></label>
-                    <input className="Connection-form-input" onChange={(e) => checkCondition(e, emailCondition)} type="email" id="email" placeholder="exemple@mail.com" required />
-                </div>
-                <div className="Connection-form-container">
-                    <label className="Connection-form-label" htmlFor="confirmEmail">Confirmer votre adresse mail <sup className="required">*</sup></label>
-                    <input className="Connection-form-input" onChange={(e) => checkCondition(e, confirmemailCondition)} type="email" id="confirmemail" placeholder="exemple@mail.com" required />
-                </div>
-                <div className="Connection-form-container">
-                    <label className="Connection-form-label" htmlFor="password">Mot de passe <sup className="required">*</sup></label>
-                    <input className="Connection-form-input" onChange={(e) => checkCondition(e, passwordCondition)} type="password" id="password" required />
-                </div>
-                <div className="Connection-form-container">
-                    <label className="Connection-form-label" htmlFor="confirmpassword">Confirmer votre mot de passe <sup className="required">*</sup></label>
-                    <input className="Connection-form-input" onChange={(e) => checkCondition(e, confirmpasswordCondition)} type="password" id="confirmpassword" required />
-                </div>
-                <button className="Connection-form-submit" type="submit">Submit</button>
-                <span className="Inscription-text">
+        <form className="Connection-form" onSubmit={handleSubmit}>
+            <h2 className="Connection-form-title">Formulaire d'inscription</h2>
+            <div className="Connection-form-container">
+                <label className="Connection-form-label" htmlFor="fname">Prénom <sup className="required">*</sup></label>
+                <input className="Connection-form-input" type="text" id="fname" placeholder="Jean-Pierre" required />
+            </div>
+            <div className="Connection-form-container">
+                <label className="Connection-form-label" htmlFor="lname">Nom <sup className="required">*</sup></label>
+                <input className="Connection-form-input" type="text" id="lname" placeholder="Caillou" required />
+            </div>
+            <div className="Connection-form-container">
+                <label className="Connection-form-label" htmlFor="email">Adresse mail <sup className="required">*</sup></label>
+                <input className="Connection-form-input" onChange={(e) => checkCondition(e, emailCondition)}
+                       type="email" id="email" placeholder="exemple@mail.com" required />
+            </div>
+            <div className="Connection-form-container">
+                <label className="Connection-form-label" htmlFor="confirmEmail">Confirmer votre adresse mail <sup className="required">*</sup></label>
+                <input className="Connection-form-input" onChange={(e) => checkCondition(e, confirmemailCondition)}
+                       type="email" id="confirmemail" placeholder="exemple@mail.com" required />
+            </div>
+            <div className="Connection-form-container">
+                <label className="Connection-form-label" htmlFor="password">Mot de passe <sup className="required">*</sup></label>
+                <input className="Connection-form-input" onChange={(e) => checkCondition(e, passwordCondition)}
+                       type="password" id="password" minLength={12} required />
+            </div>
+            <div className="Connection-form-container">
+                <label className="Connection-form-label" htmlFor="confirmpassword">Confirmer votre mot de passe <sup className="required">*</sup></label>
+                <input className="Connection-form-input" onChange={(e) => checkCondition(e, confirmpasswordCondition)}
+                       type="password" id="confirmpassword" minLength={12} required />
+            </div>
+            <button className="Connection-form-submit" type="submit">Submit</button>
+            <span className="Inscription-text">
                 Vous avez un compte ?<br/>
-                Connectez-vous maintenant <Link to="/Connection" className="Inscription-link">ici</Link>
+                Connectez-vous maintenant <NavLink to="/Connection" className="Inscription-link">ici</NavLink>
             </span>
-            </form>
-        </>
+        </form>
     )
 }
