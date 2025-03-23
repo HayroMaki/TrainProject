@@ -4,37 +4,36 @@ import Command from "../interfaces/Command";
 import "../stylesheets/Cart.css";
 import {Option} from "../interfaces/Option.tsx";
 
+
 const exampleData: Command[] = [
     {
         validated: false,
         validation_date: null,
         options: [Option.PLA_TRA, Option.BAG_SUP],
+        seat: "12A",
         travel_info: {
             train_ref: "TGV123",
             departure: "Paris Gare de Lyon",
             arrival: "Lyon Part-Dieu",
-            departure_date: "2025-04-10",
-            departure_time: "10:00",
-            arrival_date: "2025-04-10",
-            arrival_time: "14:30",
-            price: 45,
-            seat: "12A",
+            date: "2025-04-10",
+            time: "10:00",
+            length: 270,
+            price: 45
         }
     },
     {
         validated: false,
         validation_date: null,
         options: [Option.PLA_TRA, Option.BAG_SUP, Option.GAR_ANN, Option.PRI_ELE, Option.INF_SMS],
+        seat: "8C",
         travel_info: {
             train_ref: "TGV5678",
             departure: "Lyon Part-Dieu",
             arrival: "Paris Gare de Lyon",
-            departure_date: "2025-04-15",
-            departure_time: "10:00",
-            arrival_date: "2025-04-15",
-            arrival_time: "14:30",
-            price: 49,
-            seat: "8C"
+            date: "2025-04-15",
+            time: "10:00",
+            length: 150,
+            price: 49
         }
     }
 ];

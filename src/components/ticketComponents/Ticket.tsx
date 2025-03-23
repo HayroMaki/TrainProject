@@ -1,25 +1,24 @@
-import React from "react";
-import Command from "../../interfaces/Command.tsx";
+import Command from "../../interfaces/Command";
+import { Option } from "../../interfaces/Option";
 
 interface TicketProps {
     command: Command;
     index: number;
-    removeOption: (commandIndex: number, option: string) => void;
+    removeOption: (commandIndex: number, option: Option) => void;
     removeItem: (commandIndex: number) => void;
 }
 
 const Ticket: React.FC<TicketProps> = ({ command, index, removeOption, removeItem }) => {
     return (
         <div className="cart-item">
-            {/* ticket's info */}
             <div className="ticket-info">
                 <h3>🚆 {command.travel_info.train_ref} - {command.travel_info.departure} → {command.travel_info.arrival}</h3>
-                <p><strong>Départ :</strong> {command.travel_info.departure_date} à {command.travel_info.departure_time}</p>
-                <p><strong>Arrivée :</strong> {command.travel_info.arrival_date} à {command.travel_info.arrival_time}</p>
-                <p><strong>Siège :</strong> {command.travel_info.seat}</p>
+                <p><strong>Date :</strong> {command.travel_info.date}</p>
+                <p><strong>Heure :</strong> {command.travel_info.time}</p>
+                <p><strong>Durée :</strong> {command.travel_info.length} min</p>
+                <p><strong>Siège :</strong> {command.seat}</p>
             </div>
 
-            {/* options */}
             <div className="options-container">
                 <strong>Options :</strong>
                 {command.options.length > 0 ? (
@@ -27,7 +26,10 @@ const Ticket: React.FC<TicketProps> = ({ command, index, removeOption, removeIte
                         {command.options.map((option, optIndex) => (
                             <li key={optIndex}>
                                 {option}
-                                <button className="remove-option-btn" onClick={() => removeOption(index, option)}>X</button>
+                                <button
+                                    className="remove-option-btn"
+                                    onClick={() => removeOption(index, option)}
+                                >X</button>
                             </li>
                         ))}
                     </ul>
@@ -36,7 +38,6 @@ const Ticket: React.FC<TicketProps> = ({ command, index, removeOption, removeIte
                 )}
             </div>
 
-            {/* price */}
             <div className="ticket-actions">
                 <p>{command.travel_info.price}€</p>
                 <button className="remove-btn" onClick={() => removeItem(index)}>Retirer</button>
