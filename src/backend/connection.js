@@ -97,41 +97,43 @@ app.post("/api/insertClient", async (req, res) => {
     }
 });
 
+// inserting example travels
 app.post("/api/insertTravels", async (req, res) => {
     try {
+        // retrieving data
         const { data } = req.body;
         const { isRoundTrip, departureDate, arrivalDate, departure, arrival } = data;
 
-        // Fonction pour générer une heure aléatoire
+        // Function to generate random hours
         const generateRandomTime = () => {
             const hours = Math.floor(Math.random() * 24);
             const minutes = Math.floor(Math.random() * 60);
             return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
         };
 
-        // Fonction pour générer une durée aléatoire (en minutes)
+        // Function to generate a random travel length
         const generateRandomLength = () => {
             return Math.floor(Math.random() * 180) + 60; // Entre 1h et 4h
         };
 
-        // Fonction pour insérer des trajets
+        // Function to insert many travels
         const insertTravels = async (departureCity, arrivalCity, date, numberOfTravels) => {
             const travels = [];
 
             for (let i = 0; i < numberOfTravels; i++) {
                 const travel = {
-                    train_ref: `TR${Math.floor(Math.random() * 1000)}`, // Référence aléatoire du train
+                    train_ref: `TR${Math.floor(Math.random() * 1000)}`, // Random train reference
                     departure: departureCity,
                     arrival: arrivalCity,
                     date: date,
                     time: generateRandomTime(),
                     length: generateRandomLength(),
-                    price: Math.floor(Math.random() * 100) + 50 // Prix aléatoire entre 50 et 150
+                    price: Math.floor(Math.random() * 100) + 50 // Random price between 50 and 100 euros
                 };
                 travels.push(travel);
             }
 
-            // Vérifier si des trajets existent déjà pour cette date et ces villes
+            // Check if routes already exist for this date and these cities
             const existingTravels = await Travel.find({
                 date: date,
                 departure: departureCity,
@@ -142,12 +144,12 @@ app.post("/api/insertTravels", async (req, res) => {
                 return { success: false, message: `Des trajets existent déjà pour ${departureCity} -> ${arrivalCity} le ${date}.` };
             }
 
-            // Insérer les trajets dans la base de données
+            // Insert routes in the database
             await Travel.insertMany(travels);
             return { success: true, message: `Trajets insérés avec succès pour ${departureCity} -> ${arrivalCity} le ${date}.` };
         };
 
-        // Générer les trajets aller
+        // Generate outbound trips
         const numberOfTravels = Math.floor(Math.random() * (10 - 3 + 1)) + 3;
 
         const allerResult = await insertTravels(departure, arrival, departureDate, numberOfTravels);
@@ -155,7 +157,7 @@ app.post("/api/insertTravels", async (req, res) => {
             return res.status(400).json({ message: allerResult.message });
         }
 
-        // Générer les trajets retour si isRoundTrip est true
+        // Generate return trips if isRoundTrip is true
         if (isRoundTrip) {
             const numberOfTravels = Math.floor(Math.random() * (10 - 3 + 1)) + 3;
             const returnDate = arrivalDate || departureDate; // Si arrivalDate est null, utiliser departureDate
@@ -166,6 +168,27 @@ app.post("/api/insertTravels", async (req, res) => {
         }
 
         res.status(201).json({ message: "Trajets insérés avec succès !" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Route to retrieve trips based on search criteria
+app.get("/api/getTravels", async (req, res) => {
+    try {
+        const { departure, arrival, date } = req.query;
+
+        // Building the search query
+        const query = {};
+        if (departure) query.departure = departure;
+        if (arrival) query.arrival = arrival;
+        if (date) query.date = date;
+
+        // Retrieve corresponding trips and sort them by price
+        const travels = await Travel.find(query).sort({ price: 1 });
+        console.log(travels);
+
+        res.status(200).json(travels);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

@@ -1,0 +1,100 @@
+.resa-container {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--navy);
+    padding: 2rem;
+}
+
+.resa-container h2 {
+    font-size: 2rem;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.resa-items {
+    width: 80%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.resa-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background: var(--white);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border-left: 0.5rem solid var(--teal);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    width: 100%;
+    position: relative;
+}
+
+.ticket-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    flex: 2;
+}
+
+.ticket-info h3 {
+    font-size: 1.8rem;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ticket-info p {
+    font-size: 1.2rem;
+    color: var(--teal);
+}
+
+.options-container {
+    flex: 1;
+    padding: 1rem;
+    border-radius: 0.8rem;
+    border-left: 4px solid var(--teal);
+    color: var(--navy);
+    margin-left: auto;
+    min-width: 220px;
+    margin-top: 2.5rem;
+}
+
+
+.options-container strong {
+    font-size: 1.2rem;
+}
+
+.options-container ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 0.5rem;
+}
+
+.options-container li {
+    background: var(--white);
+    padding: 0.5rem 1rem;
+    margin: 0.4rem 0;
+    border-radius: 0.5rem;
+    border: 1px solid var(--teal);
+    color: var(--navy);
+}
+
+.validation-date {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--teal);
+}

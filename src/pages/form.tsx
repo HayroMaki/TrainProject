@@ -6,7 +6,6 @@ import {Header} from "../components/Header.tsx";
  * Form component for handling travel information input.
  */
 export const Form = () => {
-
     const navigate = useNavigate();
 
     // State variables
@@ -80,13 +79,15 @@ export const Form = () => {
             arrival,
         };
 
-        // Example of how to send the form data to an API (commented out)
+        // Sending the information to database
         await fetch("http://localhost:5000/api/insertTravels", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ data: formData }),
         });
-        navigate('/travels');
+
+        // Navigate to the travels page
+        navigate('/travels', { state: { formData } });
     };
 
     return (

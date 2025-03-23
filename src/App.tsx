@@ -1,19 +1,27 @@
 import {Route, HashRouter as Router, Routes } from 'react-router-dom';
 
+import {UserProvider} from "./components/UserContext.tsx";
+
 import {Connection} from "./pages/Connection.tsx";
 import {Form} from "./pages/form.tsx";
 import {Travels} from "./pages/Travels.tsx";
+import Cart from "./pages/Cart.tsx";
+import Payment from "./pages/Payment.tsx";
 import {Inscription} from "./pages/Inscription.tsx";
 
 function App() {
     return (
         <Router>
-            <Routes>
-                <Route path="/" element={<Form/>} />
-                <Route path="/travels" element={<Travels/>} />
-                <Route path="/connection" element={<Connection />}/>
-                <Route path="/inscription" element={<Inscription />}/>
-            </Routes>
+            <UserProvider>
+                <Routes>
+                    <Route path="/" element={<Form/>}/>
+                    <Route path="/travels" element={<Travels/>}/>
+                    <Route path="/cart" element={<Cart/>}/>
+                    <Route path="/payment" element={<Payment/>}/>
+                    <Route path="/connection" element={<Connection/>}/>
+                    <Route path="/inscription" element={<Inscription/>}/>
+                </Routes>
+            </UserProvider>
         </Router>
     );
 }
