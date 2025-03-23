@@ -40,7 +40,7 @@ export const Form = () => {
      * Validates the input data and logs the form data if valid.
      * @param {Event} event - The form submission event.
      */
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();
         const currentDate = new Date();
         const selectedDepartureDate = new Date(departureDate);

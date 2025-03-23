@@ -1,6 +1,7 @@
 import {Component, useEffect, useState} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './../stylesheets/Travels.css';
+import {useUserContext} from "../components/UserContext.tsx";
 import Travel from "../interfaces/Travel.tsx";
 
 // Utility function to format date
@@ -41,9 +42,9 @@ const calculateArrivalTime = (departureDate: string, departureTime: string, dura
 };
 
 // Component to display a single travel card
-class TravelCard extends Component<{ travel: Travel, onAddToCart: (travel: Travel) => void }> {
+class TravelCard extends Component<{ travel: Travel, onAddToCart: (travel: Travel) => void, isConnected: boolean }> {
     render() {
-        const {travel, onAddToCart} = this.props;
+        const {travel, onAddToCart, isConnected} = this.props;
         return (
             <div className="travel-card">
                 <h3>Train Ref: {travel.train_ref}</h3>
@@ -53,7 +54,9 @@ class TravelCard extends Component<{ travel: Travel, onAddToCart: (travel: Trave
                 <p><strong>Arrivée :</strong> {calculateArrivalTime(travel.date, travel.time, travel.length)}</p>
                 <p><strong>Durée :</strong> {formatDuration(travel.length)}</p>
                 <p><strong>Prix :</strong> {travel.price} €</p>
-                <button onClick={() => onAddToCart(travel)}>+ Ajouter au panier</button>
+                <button onClick={() => onAddToCart(travel)} disabled={!isConnected}>
+                    + Ajouter au panier
+                </button>
             </div>
         );
     }
@@ -94,6 +97,7 @@ export const Travels = () => {
     const [loading, setLoading] = useState(true);
     const [cart, setCart] = useState([]);
     const [showCart, setShowCart] = useState(false);
+    const { connected } = useUserContext(); // Get the connected state from UserContext
 
     // Function to add a travel to the cart
     const addToCart = (travel: Travel) => {
@@ -170,7 +174,7 @@ export const Travels = () => {
             </button>
 
             {/* Valider button */}
-            <button className="validate-button" onClick={handleValidate}>
+            <button className="validate-button" onClick={handleValidate} disabled={!connected || cart.length === 0}>
                 Valider
             </button>
 
@@ -193,6 +197,7 @@ export const Travels = () => {
                                     key={index}
                                     travel={travel}
                                     onAddToCart={addToCart}
+                                    isConnected={connected} // Pass the connected state to TravelCard
                                 />
                             ))}
                         </div>
@@ -209,6 +214,7 @@ export const Travels = () => {
                                         key={index}
                                         travel={travel}
                                         onAddToCart={addToCart}
+                                        isConnected={connected} // Pass the connected state to TravelCard
                                     />
                                 ))}
                             </div>
