@@ -3,11 +3,11 @@ import {Route, HashRouter as Router, Routes } from 'react-router-dom';
 import {UserProvider} from "./components/UserContext.tsx";
 
 import {Connection} from "./pages/Connection.tsx";
-import {Inscription} from "./pages/Inscription.tsx";
 import {Form} from "./pages/form.tsx";
 import {Travels} from "./pages/Travels.tsx";
 import Cart from "./pages/Cart.tsx";
 import Payment from "./pages/Payment.tsx";
+import {Inscription} from "./pages/Inscription.tsx";
 
 function App() {
     return (
