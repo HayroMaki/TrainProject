@@ -6,6 +6,7 @@ import {Connection} from "./pages/Connection.tsx";
 import {Form} from "./pages/form.tsx";
 import {Travels} from "./pages/Travels.tsx";
 import Cart from "./pages/Cart.tsx";
+import Payment from "./pages/Payment.tsx";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                     <Route path="/" element={<Form/>}/>
                     <Route path="/travels" element={<Travels/>}/>
                     <Route path="/cart" element={<Cart/>}/>
+                    <Route path="/payment" element={<Payment/>}/>
                     <Route path="/" element={<Connection />}/>
                 </Routes>
             </Router>
