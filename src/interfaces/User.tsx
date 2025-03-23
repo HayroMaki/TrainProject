@@ -8,7 +8,7 @@ export default interface User {
     cart: Command[];
     commands: Command[];
     subscription: string|null;
-    creation_date: string;
+    creation_date: Date;
     bank_info: {
         first_name: string;
         last_name: string;

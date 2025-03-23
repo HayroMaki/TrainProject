@@ -1,12 +1,11 @@
 .Connection-form {
     width: 100%;
-    height: 100vh;
+    height: 89vh;
     color: #242424;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1em;
     background-color: var(--white);
 }
 
@@ -16,18 +15,25 @@
 }
 
 .Connection-form-container {
-    width: 40%;
+    width: 50%;
+    max-width: 800px;
+    margin-top: 1em;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .Connection-form-label {
-    justify-self: flex-start;
+    align-self: flex-start;
+}
+
+.required {
+    color: red;
 }
 
 .Connection-form-input {
-    width: 100%;
+    width: calc(100% - 30px);
     margin-top: 0.2em;
     background-color: var(--white);
     padding: 15px;
@@ -36,6 +42,7 @@
 
 .Connection-form-submit {
     font-size: 1em;
+    margin-top: 2em;
     padding: 1em 1.6em;
     background-color: var(--teal);
     border: none;
@@ -62,4 +69,12 @@
 
 .Inscription-link:hover {
     cursor: pointer;
+}
+
+.is-valid {
+    background-color: #70ff70;
+}
+
+.is-invalid {
+    background-color: #ff8686;
 }

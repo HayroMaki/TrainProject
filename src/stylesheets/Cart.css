@@ -168,3 +168,41 @@
     background: var(--teal);
     color: white;
 }
+
+.recap-container {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.2);
+    max-width: 800px;
+    width: 100%;
+    color: var(--navy);
+}
+
+.recap-item {
+    margin-bottom: 1.5rem;
+}
+
+.recap-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.cancel-btn, .confirm-btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background: var(--teal);
+    color: white;
+}
+
+.confirm-btn {
+    background: var(--mint);
+    color: var(--navy);
+}

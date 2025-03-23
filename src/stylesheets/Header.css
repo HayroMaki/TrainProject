@@ -27,6 +27,8 @@
     font-size: 1.1rem;
     transition: all 0.5s ease;
     box-shadow: #4c4c4c 2px 2px 2px;
+    text-decoration: none;
+    color: white;
 }
 
 .App-header-right:hover {

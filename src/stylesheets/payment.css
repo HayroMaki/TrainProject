@@ -1,0 +1,77 @@
+.payment-container {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--navy);
+    padding: 2rem;
+}
+
+.payment-form {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.payment-form h2 {
+    text-align: center;
+    color: var(--navy);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.payment-form label {
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+}
+
+.payment-form input {
+    padding: 0.6rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--teal);
+    font-size: 1rem;
+    width: 100%;
+    background-color: white;
+    color: var(--navy);
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+.payment-form input:focus {
+    outline: none;
+    border-color: var(--navy);
+    background-color: white;
+    box-shadow: 0 0 0 2px var(--mint);
+}
+
+.payment-form span {
+    font-size: 0.9rem;
+    color: red;
+    margin-top: -0.5rem;
+}
+
+.payment-form button {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: var(--mint);
+    color: var(--navy);
+    border: none;
+    border-radius: 0.6rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.payment-form button:hover {
+    background-color: var(--teal);
+    color: white;
+}

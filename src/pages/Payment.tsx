@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import "../stylesheets/payment.css";
 
 interface PaymentDetails {
     cardNumber: string;
@@ -74,45 +75,48 @@ const PaymentComponent: React.FC = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor="cardNumber">Numéro de carte:</label>
-                <input
-                    type="text"
-                    id="cardNumber"
-                    name="cardNumber"
-                    value={paymentDetails.cardNumber}
-                    onChange={handleChange}
-                    required
-                />
-                {errors.cardNumber && <span style={{ color: 'red' }}>{errors.cardNumber}</span>}
-            </div>
-            <div>
-                <label htmlFor="expiryDate">Date d'expiration (MM/YY):</label>
-                <input
-                    type="text"
-                    id="expiryDate"
-                    name="expiryDate"
-                    value={paymentDetails.expiryDate}
-                    onChange={handleChange}
-                    required
-                />
-                {errors.expiryDate && <span style={{ color: 'red' }}>{errors.expiryDate}</span>}
-            </div>
-            <div>
-                <label htmlFor="cvv">CVV:</label>
-                <input
-                    type="text"
-                    id="cvv"
-                    name="cvv"
-                    value={paymentDetails.cvv}
-                    onChange={handleChange}
-                    required
-                />
-                {errors.cvv && <span style={{ color: 'red' }}>{errors.cvv}</span>}
-            </div>
-            <button type="submit">Payer</button>
-        </form>
+        <div className="payment-container">
+            <form onSubmit={handleSubmit} className="payment-form">
+                <h2>Paiement sécurisé</h2>
+                <div>
+                    <label htmlFor="cardNumber">Numéro de carte:</label>
+                    <input
+                        type="text"
+                        id="cardNumber"
+                        name="cardNumber"
+                        value={paymentDetails.cardNumber}
+                        onChange={handleChange}
+                        required
+                    />
+                    {errors.cardNumber && <span style={{ color: 'red' }}>{errors.cardNumber}</span>}
+                </div>
+                <div>
+                    <label htmlFor="expiryDate">Date d'expiration (MM/YY):</label>
+                    <input
+                        type="text"
+                        id="expiryDate"
+                        name="expiryDate"
+                        value={paymentDetails.expiryDate}
+                        onChange={handleChange}
+                        required
+                    />
+                    {errors.expiryDate && <span style={{ color: 'red' }}>{errors.expiryDate}</span>}
+                </div>
+                <div>
+                    <label htmlFor="cvv">CVV:</label>
+                    <input
+                        type="text"
+                        id="cvv"
+                        name="cvv"
+                        value={paymentDetails.cvv}
+                        onChange={handleChange}
+                        required
+                    />
+                    {errors.cvv && <span style={{ color: 'red' }}>{errors.cvv}</span>}
+                </div>
+                <button type="submit">Payer</button>
+            </form>
+        </div>
     );
 };
 
