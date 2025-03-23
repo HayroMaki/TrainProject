@@ -95,7 +95,7 @@ export const Travels = () => {
     const [travels, setTravels] = useState([]);
     const [returnTravels, setReturnTravels] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [cart, setCart] = useState([]);
+    const [cart, setCart] = useState<Travel[]>([]);
     const [showCart, setShowCart] = useState(false);
     const { connected } = useUserContext(); // Get the connected state from UserContext
 
@@ -103,7 +103,7 @@ export const Travels = () => {
     const addToCart = (travel: Travel) => {
         setCart([...cart, travel]);
         // Add animation class
-        const cartButton = document.querySelector('.cart-button');
+        const cartButton = document.querySelector('.cart-button') as HTMLButtonElement;
         cartButton.classList.add('animate-cart');
 
         // Remove the class after the animation
@@ -113,7 +113,7 @@ export const Travels = () => {
     };
 
     // Function to remove a travel from the cart
-    const removeFromCart = (index) => {
+    const removeFromCart = (index: number) => {
         const newCart = cart.filter((_, i) => i !== index);
         setCart(newCart);
     };

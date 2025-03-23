@@ -1,6 +1,7 @@
 import React, {createContext, useState, useContext, ReactNode} from "react";
 import User from "../interfaces/User.tsx";
 import Command from "../interfaces/Command.tsx";
+import {Option} from "../interfaces/Option.tsx";
 import {Header} from "./Header.tsx";
 
 // Définition du type pour le contexte User :
@@ -14,13 +15,12 @@ interface UserContextType {
 
 const defaultUser:User = {
     email: "",
-    password: "",
     first_name: "",
     last_name: "",
     cart: [],
     commands: [],
-    subscription: null,
-    creation_date: new Date(),
+    subscription: "",
+    creation_date: "",
     bank_info: {
         first_name: "",
         last_name: "",

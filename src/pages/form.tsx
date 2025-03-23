@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 /**
@@ -40,7 +40,7 @@ export const Form = () => {
      * Validates the input data and logs the form data if valid.
      * @param {Event} event - The form submission event.
      */
-    const handleSubmit = async (event: { preventDefault: () => void; }) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const currentDate = new Date();
         const selectedDepartureDate = new Date(departureDate);
