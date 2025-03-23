@@ -11,8 +11,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<Form/>} />
                 <Route path="/travels" element={<Travels/>} />
-                <Route path="/Connection" element={<Connection />}/>
-                <Route path="/Inscription" element={<Inscription />}/>
+                <Route path="/connection" element={<Connection />}/>
+                <Route path="/inscription" element={<Inscription />}/>
             </Routes>
         </Router>
     );

@@ -2,11 +2,13 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import bcrypt from "bcrypt";
 
 dotenv.config();
 
 const app = express();
 const PORT = 5000;
+const saltRounds = parseInt(process.env.SALT_ROUNDS);
 
 // Middleware
 app.use(cors());
@@ -26,8 +28,20 @@ mongoose.connect(mongoURI, {}).then(() => {
 
 // Définition du modèle utilisateur
 const userSchema = new mongoose.Schema({
-    name: String,
-    age: Number
+    email: String,
+    password: String,
+    first_name: String,
+    last_name: String,
+    cart: Array,
+    commands: Array,
+    subscription: String,
+    creation_date: String,
+    bank_info: {
+        first_name: String,
+        last_name: String,
+        card_number: String,
+        expiration_date: Date,
+    }
 });
 
 // travel model
@@ -44,11 +58,38 @@ const travelSchema = new mongoose.Schema({
 const User = mongoose.model("User", userSchema);
 const Travel = mongoose.model("Travel", travelSchema);
 
+app.get("/api/checkUser", async (req, res) => {
+    try {
+        const { email, pwd } = req.body;
+        const document = await User.findOne({ email: data.email, password: data.password }).exec();
+        console.log(document);
+    } catch (error) {
+        res.status(500).json({error: error.message});
+    }
+})
+
 // Route pour insérer un utilisateur
 app.post("/api/insertClient", async (req, res) => {
     try {
-        const { name, age } = req.body;
-        const newUser = new User({ name, age });
+        const { first_name, last_name, email, password } = req.body;
+        const salt = await bcrypt.genSalt(saltRounds);
+        const hashedPwd = await bcrypt.hash(password, salt);
+        const cart = [];
+        const commands = [];
+        const subscription = "";
+        const now = new Date().toLocaleDateString();
+        const bank_info = {};
+        const newUser = new User({
+            email: email,
+            password: hashedPwd,
+            first_name: first_name,
+            last_name: last_name,
+            cart: cart,
+            commands: commands,
+            subscription: subscription,
+            creation_date: now,
+            bank_info: bank_info
+        });
         await newUser.save();
         res.status(201).json({ message: "Utilisateur inséré avec succès !" });
     } catch (error) {
