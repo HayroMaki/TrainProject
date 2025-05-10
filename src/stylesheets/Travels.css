@@ -1,70 +1,218 @@
 .travels-container {
-    padding: 20px;
+    padding: 2.5rem;
     max-width: 1200px;
     margin: 0 auto;
-    font-family: Arial, sans-serif;
 }
 
 h1 {
     text-align: center;
-    color: var(--navy);
-    margin-bottom: 20px;
+    color: var(--secondary);
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: 800;
+    position: relative;
+    display: inline-block;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: var(--primary);
+    border-radius: 10px;
 }
 
 .search-details {
     background-color: var(--white);
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem 2rem;
+    border-radius: var(--radius-lg);
+    margin-bottom: 2.5rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-200);
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 2rem auto;
+}
+
+.search-details::before {
+    content: '🔍';
+    position: absolute;
+    left: -15px;
+    top: -15px;
+    background-color: var(--primary);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    box-shadow: var(--shadow-md);
 }
 
 .search-details p {
-    margin: 5px 0;
-    color: #555;
+    margin: 0.8rem 0;
+    color: var(--gray-700);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.search-details p strong {
+    color: var(--gray-900);
+    margin-right: 0.5rem;
+    font-weight: 600;
 }
 
 h2 {
-    color: var(--navy);
-    margin-top: 20px;
+    color: var(--secondary);
+    margin: 2rem 0 1.5rem 0;
+    font-size: 1.8rem;
+    font-weight: 700;
 }
 
 .travels-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
 }
 
 .travel-card {
     background-color: var(--white);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: 1.5rem;
+    position: relative;
+    border: 1px solid var(--gray-200);
+    transition: all 0.3s ease;
+    overflow: hidden;
 }
 
 .travel-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-lg);
 }
 
 .travel-card h3 {
     margin-top: 0;
-    color: var(--navy);
+    color: var(--secondary);
+    border-bottom: 1px solid var(--gray-200);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.travel-card button {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    width: 100%;
+    margin-top: 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.travel-card button:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-dark));
+    transform: scale(1.02);
+}
+
+.travel-card button:disabled {
+    background: var(--gray-300);
+    cursor: not-allowed;
+}
+
+.travel-card-header {
+    padding: 1.5rem;
+    background: linear-gradient(to right, var(--secondary-light), var(--secondary));
+    color: var(--white);
+    position: relative;
+}
+
+.travel-card-body {
+    padding: 1.5rem;
+    flex-grow: 1;
+}
+
+.travel-card-footer {
+    padding: 1rem 1.5rem;
+    background-color: var(--gray-100);
+    border-top: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.travel-card h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--secondary);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.train-type {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.travel-time {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .travel-card p {
-    margin: 8px 0;
-    color: #555;
+    margin: 0.6rem 0;
+    color: var(--gray-700);
+    display: flex;
+    align-items: center;
 }
 
-.travel-card strong {
-    color: var(--navy);
+.travel-card p::before {
+    content: '•';
+    margin-right: 0.5rem;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.travel-card .price {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--secondary);
+    margin: 0;
+}
+
+.travel-card .price::before {
+    content: none;
+}
+
+.price-suffix {
+    font-size: 1rem;
+    font-weight: normal;
+    color: var(--gray-600);
 }
 
 .travels-container > p {
     text-align: center;
-    color: #777;
+    color: var(--gray-600);
+    margin: 2rem 0;
+    font-style: italic;
 }
 
 @keyframes cartAnimation {
@@ -80,130 +228,361 @@ h2 {
 }
 
 .animate-cart {
-    animation: cartAnimation 0.5s ease-in-out;
+    animation: jump 0.5s ease;
+}
+
+@keyframes jump {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 .cart-button {
     position: fixed;
-    top: 120px;
-    right: 20px;
-    background-color: var(--teal);
-    color: var(--white);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    top: 6rem;
+    right: 2rem;
+    background-color: var(--white);
+    color: var(--secondary);
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-200);
     cursor: pointer;
-    font-size: 16px;
-    transition: transform 0.2s, background-color 0.2s;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    z-index: 100;
 }
 
 .cart-button:hover {
-    background-color: var(--navy);
+    background-color: var(--secondary);
+    color: var(--white);
 }
 
 /* Popup du panier */
 .cart-popup {
     position: fixed;
-    top: 170px;
-    right: 20px;
+    top: 9rem;
+    right: 2rem;
     background-color: var(--white);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    z-index: 2;
-    width: 300px;
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 101;
+    min-width: 300px;
+    max-width: 400px;
+    border: 1px solid var(--gray-200);
 }
 
 .cart-popup h3 {
     margin-top: 0;
-    color: var(--navy);
+    color: var(--secondary);
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--gray-200);
+    margin-bottom: 1rem;
 }
 
 .cart-popup ul {
     list-style: none;
     padding: 0;
+    margin: 0 0 1rem 0;
+    max-height: 300px;
+    overflow-y: auto;
 }
 
-.cart-popup ul li {
+.cart-popup li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-    color: var(--navy);
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--gray-100);
 }
 
-.cart-popup ul li button {
+.cart-popup li button {
     background: none;
     border: none;
+    color: var(--error);
     cursor: pointer;
-    color: #ff4d4d;
-    font-size: 16px;
+    font-size: 1.2rem;
+    transition: all 0.2s ease;
 }
 
-.cart-popup ul li button:hover {
-    color: #cc0000;
+.cart-popup li button:hover {
+    transform: scale(1.1);
+}
+
+.cart-popup > button {
+    background-color: var(--gray-200);
+    color: var(--gray-700);
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    width: 100%;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.cart-popup > button:hover {
+    background-color: var(--gray-300);
+}
+
+.cart-popup .total {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 1.5rem 0;
+    text-align: right;
+    color: var(--secondary);
+    padding-top: 1rem;
+    border-top: 2px solid var(--gray-200);
 }
 
 .cart-popup p {
     text-align: center;
-    color: #777;
+    color: var(--gray-600);
+    font-style: italic;
+    margin: 1.5rem 0;
 }
 
-/* Bouton Ajouter au panier */
-.travel-card button {
-    background-color: var(--teal);
-    color: var(--white);
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    margin-top: 10px;
-    transition: background-color 0.2s;
+/* Style pour les cartes de trajet retour */
+.return-card {
+    background-color: rgba(var(--secondary-rgb-fallback), 0.05);
+    border-color: var(--secondary-light);
 }
 
-.travel-card button:hover {
-    background-color: var(--navy);
+.return-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--secondary);
+    color: white;
+    padding: 0.35rem 0.7rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    transform: rotate(3deg);
 }
 
+/* Style pour le bouton de validation */
 .validate-button {
     position: fixed;
-    top: 170px;
-    right: 20px;
-    background-color: var(--navy);
+    bottom: 2rem;
+    right: 2rem;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     color: var(--white);
+    padding: 1rem 2rem;
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-lg);
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
     cursor: pointer;
-    z-index: 1;
-    font-size: 16px;
-    transition: background-color 0.2s;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    z-index: 100;
 }
 
-.validate-button:hover {
-    background-color: var(--teal);
-}
-
-.travel-card button:disabled {
-    background-color: #cccccc;
-    color: #777777;
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-.travel-card button:disabled:hover {
-    background-color: #cccccc;
+.validate-button:hover:not(:disabled) {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
 }
 
 .validate-button:disabled {
-    background-color: #cccccc;
-    color: #777777;
+    background: var(--gray-400);
     cursor: not-allowed;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .travels-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .trip-info-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+    }
+    
+    .cart-button, .validate-button {
+        position: sticky;
+        margin: 1rem auto;
+        display: block;
+    }
+    
+    .cart-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: none;
+    }
+}
+
+/* Correctif pour le problème de variable RGB */
+:root {
+    --primary-rgb-fallback: 77, 161, 169;
+    --secondary-rgb-fallback: 45, 55, 72;
+    --error-rgb-fallback: 224, 32, 32;
+}
+
+/* Amélioration du conteneur de recherche */
+.search-details h2 {
+    color: var(--secondary);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--gray-200);
+    font-size: 1.75rem;
+}
+
+.return-travels {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px dashed var(--gray-300);
+}
+
+.return-travels h2 {
+    color: var(--secondary);
+}
+
+/* Style pour la barre d'info sur le voyage */
+.trip-info-bar {
+    background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+    padding: 1rem 2rem;
+    border-radius: var(--radius-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--white);
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-md);
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.trip-route {
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.trip-city {
+    position: relative;
+}
+
+.trip-city.departure::before {
+    content: '•';
+    position: absolute;
+    left: -10px;
+    color: var(--white);
+}
+
+.trip-arrow {
+    margin: 0 0.5rem;
+}
+
+.trip-date {
+    font-weight: 500;
+}
+
+.date-separator {
+    margin: 0 0.75rem;
     opacity: 0.7;
 }
 
-.validate-button:disabled:hover {
-    background-color: #cccccc;
+.trip-type {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+}
+
+/* Animation pour le chargement */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    font-size: 1.2rem;
+    color: var(--gray-600);
+}
+
+.loading-container p {
+    position: relative;
+    padding-left: 2.5rem;
+}
+
+.loading-container p::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    border: 3px solid var(--gray-300);
+    border-top-color: var(--primary);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: translateY(-50%) rotate(360deg);
+    }
+}
+
+/* Style pour les cartes avec le meilleur prix */
+.best-deal-card {
+    border: 2px solid #1e7e34;
+    box-shadow: 0 0 15px rgba(40, 167, 69, 0.4);
+    position: relative;
+    animation: pulse 1.5s infinite;
+}
+
+/* Animation de pulsation pour attirer l'attention */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 15px rgba(40, 167, 69, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(40, 167, 69, 0.6);
+    }
+    100% {
+        box-shadow: 0 0 15px rgba(40, 167, 69, 0.4);
+    }
+}
+
+/* Badge pour indiquer le meilleur prix */
+.best-deal-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Style pour le prix dans les cartes avec le meilleur prix */
+.best-deal-price {
+    color: #28a745;
+    font-weight: bold;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Icône à côté du prix */
+.best-deal-icon {
+    margin-left: 8px;
+    font-size: 1.3em;
 }

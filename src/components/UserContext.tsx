@@ -33,7 +33,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User>(defaultUser);
-    const [connected, setConnected] = useState<boolean>(true);
+    const [connected, setConnected] = useState<boolean>(false);
 
     const setUserCart = (cart: Command[]) => {
         setUser(prevUser => ({

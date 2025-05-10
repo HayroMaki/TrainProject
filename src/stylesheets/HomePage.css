@@ -1,0 +1,468 @@
+/* Styles généraux pour la page d'accueil */
+.home-page {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* Section hero avec image de fond */
+.hero-section {
+    position: relative;
+    height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1552423310-ba49a31e2ade?q=80&w=2071&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    color: var(--white);
+    padding: 0 1rem;
+}
+
+.hero-content {
+    max-width: 800px;
+    z-index: 1;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Bouton d'appel à l'action */
+.cta-button {
+    background-color: var(--primary);
+    color: var(--white);
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-md);
+}
+
+.cta-button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* En-têtes de section */
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    color: var(--secondary);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.section-header p {
+    font-size: 1.2rem;
+    color: var(--gray-600);
+}
+
+/* Section de formulaire de recherche */
+.search-form-section {
+    padding: 5rem 1rem;
+    background-color: var(--white);
+}
+
+/* Section des avantages */
+.benefits-section {
+    padding: 5rem 1rem;
+    background-color: var(--gray-100);
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.benefit-card {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    transition: var(--transition-smooth);
+    border: 1px solid var(--gray-200);
+}
+
+.benefit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.benefit-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.benefit-card h3 {
+    font-size: 1.3rem;
+    color: var(--secondary);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.benefit-card p {
+    color: var(--gray-600);
+    line-height: 1.6;
+}
+
+/* Section des destinations populaires */
+.destinations-section {
+    padding: 5rem 1rem;
+    background-color: var(--white);
+    position: relative;
+}
+
+.destinations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Nouveau style pour le carrousel des destinations */
+.destinations-carousel {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    padding: 0 50px;
+}
+
+.destinations-slider {
+    display: flex;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    gap: 1.5rem;
+    margin: 0 -10px; /* Marge négative pour montrer partiellement le slide suivant */
+    padding: 10px 10px;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    position: relative;
+    z-index: 1;
+}
+
+.destinations-slider::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.destination-card {
+    height: 300px;
+    min-width: 300px;
+    flex: 0 0 auto;
+    width: calc(33.333% - 1rem); /* Ajustement pour montrer partiellement le slide suivant */
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-smooth);
+    scroll-snap-align: start;
+    transform-origin: center center;
+    will-change: transform;
+}
+
+.destination-card-background {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    transition: transform 0.3s ease;
+}
+
+.destination-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.destination-card:hover .destination-card-background {
+    transform: scale(1.05);
+}
+
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: var(--white);
+    border: none;
+    border-radius: 50%;
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.carousel-nav:hover {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+.carousel-prev {
+    left: 5px;
+}
+
+.carousel-next {
+    right: 5px;
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--gray-300);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.carousel-dot:hover, .carousel-dot.active {
+    background-color: var(--primary);
+    transform: scale(1.2);
+}
+
+.destination-content {
+    width: 100%;
+    padding: 1.5rem;
+    color: var(--white);
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+}
+
+.destination-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.destination-content p {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.destination-price {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.destination-price span {
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.destination-button {
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.destination-button:hover {
+    background-color: var(--primary-dark);
+    transform: scale(1.05);
+}
+
+/* Section des témoignages */
+.testimonials-section {
+    padding: 5rem 1rem;
+    background-color: var(--gray-100);
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.testimonial-card {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: var(--transition-smooth);
+    border: 1px solid var(--gray-200);
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.testimonial-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    border: 3px solid var(--primary);
+}
+
+.testimonial-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.star-rating {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.star {
+    color: var(--gray-300);
+    margin: 0 0.1rem;
+}
+
+.star.filled {
+    color: var(--warning);
+}
+
+.testimonial-text {
+    font-style: italic;
+    color: var(--gray-700);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.testimonial-name {
+    font-weight: 600;
+    color: var(--secondary);
+}
+
+/* Section d'appel à l'action finale */
+.cta-section {
+    padding: 5rem 1rem;
+    background: linear-gradient(45deg, var(--secondary-dark), var(--secondary));
+    color: var(--white);
+    text-align: center;
+}
+
+.cta-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cta-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.cta-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-content p {
+        font-size: 1.2rem;
+    }
+    
+    .benefits-grid, 
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .destination-card {
+        min-width: 250px;
+        height: 280px;
+        width: calc(100% - 1rem);
+    }
+    
+    @media (max-width: 1024px) and (min-width: 769px) {
+        .destination-card {
+            width: calc(50% - 1rem);
+        }
+    }
+    
+    .destinations-carousel {
+        padding: 0 30px;
+    }
+    
+    .carousel-nav {
+        width: 30px;
+        height: 30px;
+        font-size: 1.2rem;
+    }
+    
+    .carousel-prev {
+        left: 0;
+    }
+    
+    .carousel-next {
+        right: 0;
+    }
+    
+    .section-header h2 {
+        font-size: 1.8rem;
+    }
+    
+    .section-header p {
+        font-size: 1rem;
+    }
+    
+    .cta-content h2 {
+        font-size: 2rem;
+    }
+    
+    .destinations-slider {
+        gap: 1rem;
+    }
+} 

@@ -1,9 +1,19 @@
-import React, {ChangeEvent, useEffect} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {NavLink, useNavigate} from "react-router-dom";
 
 export const Inscription = () => {
-
     const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [formValid, setFormValid] = useState({
+        fname: true,
+        lname: true,
+        email: true,
+        confirmemail: true,
+        password: true,
+        confirmpassword: true
+    });
+    const [errorMessage, setErrorMessage] = useState("");
 
     const mailRegex = /^[\w.]+@\w+\.\w+/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{12,}$/;
@@ -24,20 +34,28 @@ export const Inscription = () => {
         confirmpassword = document.getElementById("confirmpassword") as HTMLInputElement;
     })
 
-    Array.from(document.querySelectorAll('input')).forEach( (input) => {
-        if (input.id === "password" || input.id === "email" || input.id === "confirmemail" || input.id === "confirmpassword") return;
-        input.addEventListener('input', function () {
-            if (this.value === "") {
-                this.classList.remove('is-valid');
-                return;
-            }
-            this.classList.add('is-valid');
-        })
-    });
-
     // Visual indicators of when the input is correct
-    function checkCondition(e:ChangeEvent<HTMLInputElement>, condition: Function) {
-        if (condition(e.target.value)) {
+    function checkCondition(e:ChangeEvent<HTMLInputElement>, condition: Function, field: string) {
+        const isValid = condition(e.target.value);
+        setFormValid({...formValid, [field]: isValid});
+        
+        if (isValid) {
+            e.currentTarget.classList.remove('is-invalid')
+            e.currentTarget.classList.add('is-valid');
+        } else {
+            e.currentTarget.classList.add('is-invalid');
+            e.currentTarget.classList.remove('is-valid');
+        }
+    }
+
+    function checkTextInput(e:ChangeEvent<HTMLInputElement>) {
+        const value = e.target.value.trim();
+        const isValid = value.length > 0;
+        const field = e.target.id;
+        
+        setFormValid({...formValid, [field]: isValid});
+        
+        if (isValid) {
             e.currentTarget.classList.remove('is-invalid')
             e.currentTarget.classList.add('is-valid');
         } else {
@@ -51,7 +69,7 @@ export const Inscription = () => {
     }
 
     function confirmemailCondition(value: string) {
-        return email.value === value;
+        return email.value === value && emailCondition(value);
     }
 
     function passwordCondition(value: string) {
@@ -59,15 +77,38 @@ export const Inscription = () => {
     }
 
     function confirmpasswordCondition(value: string) {
-        return password.value === value;
+        return password.value === value && password.value.length > 0;
     }
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        if (! emailCondition(email.value) ||
-            ! confirmemailCondition(confirmemail.value) ||
-            ! passwordCondition(password.value) ||
-            ! confirmpasswordCondition(confirmpassword.value)) {
+        setErrorMessage("");
+        
+        // Vérifier tous les champs
+        const isValid = Object.values(formValid).every(value => value);
+        
+        if (!isValid) {
+            setErrorMessage("Veuillez corriger les erreurs dans le formulaire");
+            return;
+        }
+        
+        if (!emailCondition(email.value)) {
+            setErrorMessage("Veuillez entrer une adresse email valide");
+            return;
+        }
+        
+        if (email.value !== confirmemail.value) {
+            setErrorMessage("Les adresses email ne correspondent pas");
+            return;
+        }
+        
+        if (!passwordCondition(password.value)) {
+            setErrorMessage("Le mot de passe doit contenir au moins 12 caractères, dont une majuscule, une minuscule et un chiffre");
+            return;
+        }
+        
+        if (password.value !== confirmpassword.value) {
+            setErrorMessage("Les mots de passe ne correspondent pas");
             return;
         }
 
@@ -87,55 +128,169 @@ export const Inscription = () => {
                 })
 
                 if (response.status === 201) {
-
                     navigate("/connection")
-
+                } else {
+                    setErrorMessage("Une erreur est survenue lors de l'inscription");
                 }
-
             } catch (error) {
                 console.log(error);
+                setErrorMessage("Une erreur est survenue lors de l'inscription");
             }
         }
 
         insertUser(fname.value, lname.value, email.value, password.value).then();
     }
+    
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+    
+    const toggleConfirmPasswordVisibility = () => {
+        setShowConfirmPassword(!showConfirmPassword);
+    };
 
     return (
-        <form className="Connection-form" onSubmit={handleSubmit}>
-            <h2 className="Connection-form-title">Formulaire d'inscription</h2>
-            <div className="Connection-form-container">
-                <label className="Connection-form-label" htmlFor="fname">Prénom <sup className="required">*</sup></label>
-                <input className="Connection-form-input" type="text" id="fname" placeholder="Jean-Pierre" required />
+        <div className="Connection-form">
+            <div className="form-card">
+                <div className="form-card-header">
+                    <span className="icon">🚄</span>
+                    <h2 className="title">Créer un compte</h2>
+                    <p className="subtitle">Rejoignez SwiftRail pour profiter de tous nos services</p>
+                </div>
+                
+                {errorMessage && (
+                    <div className="validation-error" style={{marginBottom: "1rem", textAlign: "center"}}>
+                        {errorMessage}
+                    </div>
+                )}
+                
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label className="Connection-form-label" htmlFor="fname">
+                            Prénom <sup className="required">*</sup>
+                        </label>
+                        <input 
+                            className="Connection-form-input" 
+                            type="text" 
+                            id="fname" 
+                            placeholder="Votre prénom" 
+                            onChange={checkTextInput}
+                            required 
+                        />
+                    </div>
+                    
+                    <div className="form-group">
+                        <label className="Connection-form-label" htmlFor="lname">
+                            Nom <sup className="required">*</sup>
+                        </label>
+                        <input 
+                            className="Connection-form-input" 
+                            type="text" 
+                            id="lname" 
+                            placeholder="Votre nom" 
+                            onChange={checkTextInput}
+                            required 
+                        />
+                    </div>
+                    
+                    <div className="form-group">
+                        <label className="Connection-form-label" htmlFor="email">
+                            Adresse email <sup className="required">*</sup>
+                        </label>
+                        <input 
+                            className="Connection-form-input" 
+                            type="email" 
+                            id="email" 
+                            placeholder="exemple@mail.com"
+                            onChange={(e) => checkCondition(e, emailCondition, "email")}
+                            required 
+                        />
+                    </div>
+                    
+                    <div className="form-group">
+                        <label className="Connection-form-label" htmlFor="confirmemail">
+                            Confirmer votre email <sup className="required">*</sup>
+                        </label>
+                        <input 
+                            className="Connection-form-input" 
+                            type="email" 
+                            id="confirmemail" 
+                            placeholder="exemple@mail.com"
+                            onChange={(e) => checkCondition(e, confirmemailCondition, "confirmemail")}
+                            required 
+                        />
+                        {!formValid.confirmemail && (
+                            <div className="validation-error">Les adresses email doivent correspondre</div>
+                        )}
+                    </div>
+                    
+                    <div className="form-group">
+                        <label className="Connection-form-label" htmlFor="password">
+                            Mot de passe <sup className="required">*</sup>
+                        </label>
+                        <div style={{position: "relative"}}>
+                            <input 
+                                className="Connection-form-input" 
+                                type={showPassword ? "text" : "password"}
+                                id="password" 
+                                placeholder="Votre mot de passe" 
+                                minLength={12}
+                                onChange={(e) => checkCondition(e, passwordCondition, "password")}
+                                required 
+                            />
+                            <span 
+                                onClick={togglePasswordVisibility} 
+                                className="password-toggle"
+                            >
+                                {showPassword ? "👁️" : "👁️‍🗨️"}
+                            </span>
+                        </div>
+                        <div className="input-hint">
+                            Minimum 12 caractères, avec majuscule, minuscule et chiffre
+                        </div>
+                    </div>
+                    
+                    <div className="form-group">
+                        <label className="Connection-form-label" htmlFor="confirmpassword">
+                            Confirmer votre mot de passe <sup className="required">*</sup>
+                        </label>
+                        <div style={{position: "relative"}}>
+                            <input 
+                                className="Connection-form-input" 
+                                type={showConfirmPassword ? "text" : "password"}
+                                id="confirmpassword" 
+                                placeholder="Confirmez votre mot de passe" 
+                                minLength={12}
+                                onChange={(e) => checkCondition(e, confirmpasswordCondition, "confirmpassword")}
+                                required 
+                            />
+                            <span 
+                                onClick={toggleConfirmPasswordVisibility} 
+                                className="password-toggle"
+                            >
+                                {showConfirmPassword ? "👁️" : "👁️‍🗨️"}
+                            </span>
+                        </div>
+                        {!formValid.confirmpassword && (
+                            <div className="validation-error">Les mots de passe doivent correspondre</div>
+                        )}
+                    </div>
+                    
+                    <button className="Connection-form-submit" type="submit">
+                        Créer mon compte
+                    </button>
+                </form>
+                
+                <div className="form-divider">ou</div>
+                
+                <div className="Inscription-text">
+                    Vous avez déjà un compte ?
+                    <br/>
+                    <NavLink to="/Connection" className="Inscription-link">
+                        Se connecter maintenant
+                    </NavLink>
+                </div>
             </div>
-            <div className="Connection-form-container">
-                <label className="Connection-form-label" htmlFor="lname">Nom <sup className="required">*</sup></label>
-                <input className="Connection-form-input" type="text" id="lname" placeholder="Caillou" required />
-            </div>
-            <div className="Connection-form-container">
-                <label className="Connection-form-label" htmlFor="email">Adresse mail <sup className="required">*</sup></label>
-                <input className="Connection-form-input" onChange={(e) => checkCondition(e, emailCondition)}
-                       type="email" id="email" placeholder="exemple@mail.com" required />
-            </div>
-            <div className="Connection-form-container">
-                <label className="Connection-form-label" htmlFor="confirmEmail">Confirmer votre adresse mail <sup className="required">*</sup></label>
-                <input className="Connection-form-input" onChange={(e) => checkCondition(e, confirmemailCondition)}
-                       type="email" id="confirmemail" placeholder="exemple@mail.com" required />
-            </div>
-            <div className="Connection-form-container">
-                <label className="Connection-form-label" htmlFor="password">Mot de passe <sup className="required">*</sup></label>
-                <input className="Connection-form-input" onChange={(e) => checkCondition(e, passwordCondition)}
-                       type="password" id="password" minLength={12} required />
-            </div>
-            <div className="Connection-form-container">
-                <label className="Connection-form-label" htmlFor="confirmpassword">Confirmer votre mot de passe <sup className="required">*</sup></label>
-                <input className="Connection-form-input" onChange={(e) => checkCondition(e, confirmpasswordCondition)}
-                       type="password" id="confirmpassword" minLength={12} required />
-            </div>
-            <button className="Connection-form-submit" type="submit">Submit</button>
-            <span className="Inscription-text">
-                Vous avez un compte ?<br/>
-                Connectez-vous maintenant <NavLink to="/Connection" className="Inscription-link">ici</NavLink>
-            </span>
-        </form>
+        </div>
     )
 }

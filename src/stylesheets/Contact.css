@@ -1,0 +1,291 @@
+/* 
+ * Styles pour la page Contact
+ * Ce fichier définit l'apparence visuelle de la page "Contact" de SwiftRail
+ */
+
+/* Structure principale de la page */
+.contact-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Conteneur principal avec largeur maximale et centrage */
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    flex: 1;
+}
+
+/* Section d'en-tête avec titre et introduction */
+.contact-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 3rem 1rem;
+    background-color: #f0f4f8;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Titre principal de la page */
+.contact-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #2a3990;
+}
+
+/* Texte d'introduction */
+.contact-intro {
+    font-size: 1.1rem;
+    color: #555;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Organisation du contenu principal en deux colonnes (formulaire et infos de contact) */
+.contact-content {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+/* Adaptation du layout pour les écrans plus petits */
+@media (max-width: 900px) {
+    .contact-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Styles communs pour les sections de contenu */
+.contact-form-section,
+.contact-info-section,
+.faq-section {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Titres des sections */
+.contact-form-section h2,
+.contact-info-section h2,
+.faq-section h2 {
+    font-size: 1.8rem;
+    color: #2a3990;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e0e0ff;
+}
+
+/* Styles pour les messages de statut après soumission du formulaire */
+.form-status {
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Style pour les messages de succès */
+.form-status.success {
+    background-color: #e6f7e6;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+}
+
+/* Style pour les messages d'erreur */
+.form-status.error {
+    background-color: #fef0f0;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+}
+
+/* Style du formulaire de contact */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+/* Groupe de formulaire (label + input) */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Style des labels */
+.form-group label {
+    font-weight: 600;
+    color: #444;
+    font-size: 0.95rem;
+}
+
+/* Indicateur de champ obligatoire */
+.required {
+    color: #d32f2f;
+    margin-left: 0.2rem;
+}
+
+/* Style commun pour les champs de saisie */
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1rem;
+    width: 100%;
+    transition: border-color 0.3s;
+}
+
+/* Style des champs de saisie au focus */
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: #2a3990;
+    box-shadow: 0 0 0 2px rgba(42, 57, 144, 0.2);
+}
+
+/* Style du bouton d'envoi */
+.submit-button {
+    background-color: #2a3990;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.9rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+/* Style du bouton au survol */
+.submit-button:hover {
+    background-color: #1e2a6e;
+}
+
+/* Section des informations de contact */
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Style des méthodes de contact (adresse, téléphone, etc.) */
+.contact-method {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+/* Style des icônes de contact */
+.contact-icon {
+    font-size: 1.8rem;
+    color: #2a3990;
+    min-width: 40px;
+    text-align: center;
+}
+
+/* Titres des détails de contact */
+.contact-details h3 {
+    margin: 0 0 0.5rem;
+    color: #2a3990;
+    font-size: 1.1rem;
+}
+
+/* Texte des détails de contact */
+.contact-details p {
+    margin: 0.3rem 0;
+    color: #555;
+    line-height: 1.4;
+}
+
+/* Style pour les horaires d'ouverture */
+.hours {
+    font-size: 0.85rem;
+    color: #777;
+    font-style: italic;
+}
+
+/* Disposition des liens vers les réseaux sociaux */
+.social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+}
+
+/* Style des liens vers les réseaux sociaux */
+.social-link {
+    color: #2a3990;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+/* Style des liens au survol */
+.social-link:hover {
+    color: #1e2a6e;
+    text-decoration: underline;
+}
+
+/* Section des questions fréquentes */
+.faq-section {
+    margin-bottom: 3rem;
+}
+
+/* Grille pour afficher les questions fréquentes */
+.faq-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Adaptation pour les écrans mobiles */
+@media (max-width: 768px) {
+    .faq-items {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Style des items de FAQ */
+.faq-item {
+    padding: 1.5rem;
+    background-color: #f9fafc;
+    border-radius: 6px;
+    border-left: 4px solid #2a3990;
+}
+
+/* Style des questions */
+.faq-item h3 {
+    color: #2a3990;
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+}
+
+/* Style des réponses */
+.faq-item p {
+    margin: 0;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Pied de page */
+.contact-footer {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #2a3990;
+    color: #fff;
+    margin-top: auto;
+} 

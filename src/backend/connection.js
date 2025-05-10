@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
+import { sendTicketConfirmation } from "./mailer.js";
 
 dotenv.config();
 
@@ -130,43 +131,43 @@ app.put("/api/insertClient", async (req, res) => {
     }
 });
 
-// inserting example travels
+// insertiOn de trajets
 app.post("/api/insertTravels", async (req, res) => {
     try {
-        // retrieving data
+        // récupération des données
         const { data } = req.body;
         const { isRoundTrip, departureDate, arrivalDate, departure, arrival } = data;
 
-        // Function to generate random hours
+        // Fonction pour générer des heures
         const generateRandomTime = () => {
             const hours = Math.floor(Math.random() * 24);
             const minutes = Math.floor(Math.random() * 60);
             return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
         };
 
-        // Function to generate a random travel length
+        // Fonction pour générer une longueur
         const generateRandomLength = () => {
             return Math.floor(Math.random() * 180) + 60; // Entre 1h et 4h
         };
 
-        // Function to insert many travels
+        // Fonction pour insérer des trajets
         const insertTravels = async (departureCity, arrivalCity, date, numberOfTravels) => {
             const travels = [];
 
             for (let i = 0; i < numberOfTravels; i++) {
                 const travel = {
-                    train_ref: `TR${Math.floor(Math.random() * 1000)}`, // Random train reference
+                    train_ref: `TR${Math.floor(Math.random() * 1000)}`, // une référence de train
                     departure: departureCity,
                     arrival: arrivalCity,
                     date: date,
                     time: generateRandomTime(),
                     length: generateRandomLength(),
-                    price: Math.floor(Math.random() * 100) + 50 // Random price between 50 and 100 euros
+                    price: Math.floor(Math.random() * 100) + 50 // un prix entre 50 et 100 euros
                 };
                 travels.push(travel);
             }
 
-            // Check if routes already exist for this date and these cities
+            // On verifie si des trajets existent déjà pour une certaine date
             const existingTravels = await Travel.find({
                 date: date,
                 departure: departureCity,
@@ -177,12 +178,12 @@ app.post("/api/insertTravels", async (req, res) => {
                 return { success: false, message: `Des trajets existent déjà pour ${departureCity} -> ${arrivalCity} le ${date}.` };
             }
 
-            // Insert routes in the database
+            // On insère ces chemins dans la base de données
             await Travel.insertMany(travels);
             return { success: true, message: `Trajets insérés avec succès pour ${departureCity} -> ${arrivalCity} le ${date}.` };
         };
 
-        // Generate outbound trips
+        // Génération de voyages
         const numberOfTravels = Math.floor(Math.random() * (10 - 3 + 1)) + 3;
 
         const allerResult = await insertTravels(departure, arrival, departureDate, numberOfTravels);
@@ -190,7 +191,7 @@ app.post("/api/insertTravels", async (req, res) => {
             return res.status(400).json({ message: allerResult.message });
         }
 
-        // Generate return trips if isRoundTrip is true
+        // Génération d'un trajet retour si l'utilisateur choisit un trajet aller/retour
         if (isRoundTrip) {
             const numberOfTravels = Math.floor(Math.random() * (10 - 3 + 1)) + 3;
             const returnDate = arrivalDate || departureDate; // Si arrivalDate est null, utiliser departureDate
@@ -206,24 +207,124 @@ app.post("/api/insertTravels", async (req, res) => {
     }
 });
 
-// Route to retrieve trips based on search criteria
+// Route pour retrouver des trajets basés sur un certain critère
 app.get("/api/getTravels", async (req, res) => {
     try {
         const { departure, arrival, date } = req.query;
 
-        // Building the search query
+        // Construction de la requête de recherche
         const query = {};
         if (departure) query.departure = departure;
         if (arrival) query.arrival = arrival;
         if (date) query.date = date;
 
-        // Retrieve corresponding trips and sort them by price
-        const travels = await Travel.find(query).sort({ price: 1 });
-        console.log(travels);
+        // On retrouve les trajets correspondant et on fait un tri par prix
+        let travels = await Travel.find(query).sort({ price: 1 });
+        
+        // Si aucun trajet n'est trouvé, générer des trajets à la volée
+        if (travels.length === 0 && departure && arrival && date) {
+            console.log(`Aucun trajet trouvé pour ${departure} -> ${arrival} le ${date}. Génération de trajets...`);
+            
+            // Fonctions utilitaires pour la génération de trajets aléatoires
+            const generateRandomTime = () => {
+                const hours = Math.floor(Math.random() * 24);
+                const minutes = Math.floor(Math.random() * 60);
+                return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+            };
+
+            const generateRandomLength = () => {
+                return Math.floor(Math.random() * 180) + 60; // Entre 1h et 4h
+            };
+            
+            // Générer entre 3 et 10 trajets
+            const numberOfTravels = Math.floor(Math.random() * (10 - 3 + 1)) + 3;
+            const newTravels = [];
+            
+            for (let i = 0; i < numberOfTravels; i++) {
+                const travel = {
+                    train_ref: `TR${Math.floor(Math.random() * 1000)}`, // Référence du train
+                    departure: departure,
+                    arrival: arrival,
+                    date: date,
+                    time: generateRandomTime(),
+                    length: generateRandomLength(),
+                    price: Math.floor(Math.random() * 100) + 50 // Prix du billet
+                };
+                newTravels.push(travel);
+            }
+            
+            // Enregistrer les nouveaux trajets dans la base de données
+            await Travel.insertMany(newTravels);
+            
+            // Récupérer les trajets nouvellement créés
+            travels = await Travel.find(query).sort({ price: 1 });
+            console.log(`${travels.length} trajets générés et enregistrés pour ${departure} -> ${arrival} le ${date}`);
+        }
 
         res.status(200).json(travels);
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+});
+
+// Route pour envoyer un email de confirmation de billet
+app.post("/api/sendTicketConfirmation", async (req, res) => {
+    try {
+        const { email, command } = req.body;
+        
+        if (!email || !command) {
+            return res.status(400).json({ 
+                success: false, 
+                message: "L'email et les informations du billet sont requis" 
+            });
+        }
+        
+        // Conversion en tableau si c'est un objet unique
+        const commands = Array.isArray(command) ? command : [command];
+        
+        // Envoi de l'email de confirmation avec tous les billets
+        const result = await sendTicketConfirmation(email, commands);
+        
+        // Mise à jour de la commande dans la base de données si les billets sont associés à un utilisateur
+        const userEmail = commands[0].email;
+        if (userEmail) {
+            // Trouver l'utilisateur
+            const user = await User.findOne({ email: userEmail });
+            if (user) {
+                // Pour chaque billet envoyé, mettre à jour la base de données
+                for (const cmd of commands) {
+                    // Mise à jour du panier
+                    const updatedCart = user.cart.filter(item => 
+                        item.travel_info.train_ref !== cmd.travel_info.train_ref || 
+                        item.travel_info.date !== cmd.travel_info.date || 
+                        item.travel_info.time !== cmd.travel_info.time
+                    );
+                    
+                    // Ajout aux commandes validées
+                    user.commands.push({
+                        ...cmd,
+                        reservation_number: result.messageId
+                    });
+                    
+                    // Mise à jour du panier (supprimer les billets validés)
+                    user.cart = updatedCart;
+                }
+                
+                await user.save();
+            }
+        }
+        
+        return res.status(200).json({
+            success: true,
+            messageId: result.messageId
+        });
+    } catch (error) {
+        console.error("Erreur lors de l'envoi de l'email de confirmation:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Erreur lors de l'envoi de l'email de confirmation",
+            error: error.message
+        });
     }
 });
 

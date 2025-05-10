@@ -1,0 +1,206 @@
+/* 
+ * Styles pour la page À propos
+ * Ce fichier définit l'apparence visuelle de la page "À propos" de SwiftRail
+ */
+
+/* Structure principale de la page */
+.about-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Conteneur principal avec largeur maximale et centrage */
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    flex: 1;
+}
+
+/* Section d'en-tête avec titre et slogan */
+.hero-section {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 3rem 1rem;
+    background-color: #f0f4f8;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Style du titre principal */
+.hero-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #2a3990;
+}
+
+/* Style du slogan */
+.tagline {
+    font-size: 1.25rem;
+    color: #555;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Styles communs pour les sections de contenu */
+.about-section, 
+.team-section, 
+.values-section, 
+.future-section {
+    margin-bottom: 3rem;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Style des titres de section */
+.about-section h2, 
+.team-section h2, 
+.values-section h2, 
+.future-section h2 {
+    font-size: 1.8rem;
+    color: #2a3990;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e0e0ff;
+}
+
+/* Style des paragraphes de texte */
+.about-section p, 
+.team-intro, 
+.future-section p {
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+    font-size: 1.05rem;
+}
+
+/* Section équipe */
+/* Texte d'introduction de l'équipe */
+.team-intro {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Grille pour afficher les membres de l'équipe */
+.team-members {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+/* Carte individuelle d'un membre de l'équipe */
+.team-member {
+    background-color: #f9fafc;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+}
+
+/* Animation au survol de la carte d'un membre */
+.team-member:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Avatar/icône du membre */
+.member-avatar {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* Nom du membre */
+.team-member h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: #2a3990;
+}
+
+/* Poste/rôle du membre */
+.member-role {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+/* Description du membre */
+.member-description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #555;
+}
+
+/* Section valeurs */
+/* Grille pour afficher les valeurs */
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Carte individuelle d'une valeur */
+.value-item {
+    background-color: #f0f8ff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s;
+}
+
+/* Animation au survol d'une valeur */
+.value-item:hover {
+    background-color: #e0f0ff;
+}
+
+/* Titre de la valeur */
+.value-item h3 {
+    color: #2a3990;
+    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+}
+
+/* Description de la valeur */
+.value-item p {
+    color: #555;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+/* Pied de page */
+.about-footer {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #2a3990;
+    color: #fff;
+    margin-top: auto;
+}
+
+/* Adaptation pour les appareils mobiles et tablettes */
+@media (max-width: 768px) {
+    /* Réduction de la taille du titre sur mobile */
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+    
+    /* Réduction de la taille du slogan sur mobile */
+    .tagline {
+        font-size: 1.1rem;
+    }
+    
+    /* Affichage en colonne des membres sur mobile */
+    .team-members {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Affichage en colonne des valeurs sur mobile */
+    .values-grid {
+        grid-template-columns: 1fr;
+    }
+} 

@@ -85,19 +85,12 @@ export const Options = () => {
             validation_date: null, // Pas de date de validation pour le moment
             options: selectedOptionsPerTravel[index] || [], // Options sélectionnées
             travel_info: travel, // Informations sur le voyage
-            seat: generateRandomSeat() // Siège aléatoire
+            seat: "" // Siège vide, sera sélectionné dans la page de sélection des sièges
         }));
 
         console.log("Updated Cart (Command):", updatedCart); // Debugging
-        setUserCart(updatedCart); // Mettre à jour le panier dans le contexte utilisateur
-        navigate('/cart'); // Naviguer vers la page du panier
-    };
-
-    const generateRandomSeat = () => {
-        const randomLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
-        const randomNumber = Math.floor(Math.random() * 99) + 1;
-        const formattedNumber = randomNumber.toString().padStart(2, '0');
-        return `${randomLetter}${formattedNumber}`;
+        // Au lieu d'aller directement au panier, on va à la page de sélection des sièges
+        navigate('/seat-selection', { state: { cart: updatedCart } });
     };
 
     return (
@@ -125,7 +118,7 @@ export const Options = () => {
             {cart.length > 0 && (
                 <div className="options-footer">
                     <button className="validate-button" onClick={handleValidate}>
-                        Valider
+                        Continuer
                         <div className="total-price">
                             Total: {calculateTotalPrice(cart, selectedOptionsPerTravel).toFixed(2)} €
                         </div>

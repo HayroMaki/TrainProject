@@ -4,182 +4,568 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    background-color: var(--navy);
+    padding: 3rem 1rem;
+    background-color: var(--gray-100);
 }
 
 .cart-container h2 {
-    font-size: 2rem;
-    color: var(--white);
+    font-size: 2.5rem;
+    color: var(--secondary);
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+    font-weight: 700;
 }
 
 .cart-items {
-    width: 80%;
-    max-width: 1200px;
+    width: 90%;
+    max-width: 900px;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 2.5rem;
 }
 
-.cart-item {
+/* Billet de train */
+.train-ticket {
+    background-color: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    transition: var(--transition-smooth);
+    margin-bottom: 1.5rem;
+    max-width: 900px;
+    border: 1px solid var(--gray-200);
+}
+
+.train-ticket:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
+
+.train-ticket::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0.4rem;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--primary), var(--accent));
+    border-top-left-radius: var(--radius-lg);
+    border-bottom-left-radius: var(--radius-lg);
+}
+
+/* En-tête du billet */
+.ticket-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--white);
-    border-radius: 1rem;
-    padding: 1.5rem;
-    border-left: 0.5rem solid var(--teal);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s;
-    width: 100%;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--white);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
 }
 
-.cart-item:hover {
-    transform: scale(1.02);
+.ticket-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.15), transparent 70%);
+    pointer-events: none;
 }
 
-.ticket-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    flex: 2;
-}
-
-.ticket-info h3 {
-    font-size: 1.8rem;
-    color: var(--navy);
+.ticket-company {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
 }
 
-.ticket-info p {
-    font-size: 1.2rem;
-    color: var(--teal);
+.company-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.8rem;
+    height: 2.8rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
-.options-container {
-    flex: 1;
+.company-logo {
+    font-size: 1.6rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.company-name {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.train-type {
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: var(--radius-full);
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.train-type:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.train-tgv {
+    background-color: rgba(220, 38, 38, 0.25);
+    border-color: rgba(220, 38, 38, 0.4);
+}
+
+.train-ter {
+    background-color: rgba(22, 163, 74, 0.25);
+    border-color: rgba(22, 163, 74, 0.4);
+}
+
+.train-intercity {
+    background-color: rgba(37, 99, 235, 0.25);
+    border-color: rgba(37, 99, 235, 0.4);
+}
+
+/* Corps du billet */
+.ticket-body {
+    padding: 1.5rem;
+}
+
+.ticket-journey {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.journey-points {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 0 1rem;
+}
+
+.journey-line {
+    position: absolute;
+    top: 50%;
+    left: 8%;
+    right: 8%;
+    height: 2px;
+    background: linear-gradient(to right, var(--primary), var(--accent));
+    z-index: 1;
+}
+
+.journey-line::before, .journey-line::after {
+    content: '';
+    position: absolute;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background-color: var(--primary);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.journey-line::before {
+    left: 0;
+}
+
+.journey-line::after {
+    right: 0;
+    background-color: var(--accent);
+}
+
+.journey-duration {
+    position: absolute;
+    top: -1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--white);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--secondary);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-200);
+}
+
+.departure-point, .arrival-point {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+    background-color: var(--white);
+    padding: 0.5rem;
+    width: 8rem;
+}
+
+.city {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: 0.25rem;
+}
+
+.departure-point .city {
+    color: var(--primary);
+}
+
+.arrival-point .city {
+    color: var(--accent);
+}
+
+.time {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--gray-800);
+    margin-bottom: 0.25rem;
+}
+
+.date {
+    font-size: 0.9rem;
+    color: var(--gray-600);
+}
+
+/* Détails passager */
+.passenger-details {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--gray-100);
     padding: 1rem;
-    margin-left: 1.5rem;
-    border-radius: 0.8rem;
-    border-left: 4px solid var(--teal);
-    color: var(--navy);
+    border-radius: var(--radius-md);
+    margin-top: 1rem;
 }
 
-.options-container strong {
-    color: var(--navy);
-    font-size: 1.2rem;
+.seat-info, .class-info, .car-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.options-container ul {
+.passenger-details .label {
+    font-size: 0.85rem;
+    color: var(--gray-600);
+    margin-bottom: 0.25rem;
+}
+
+.passenger-details .value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--secondary);
+}
+
+/* Zone des options */
+.ticket-options {
+    background-color: var(--white);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--gray-200);
+    margin-top: 1.5rem;
+}
+
+.ticket-options h4 {
+    color: var(--secondary);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.options-list {
     list-style: none;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
-.options-container li {
+.option-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: white;
-    padding: 0.5rem 1rem;
-    margin: 0.5rem 0;
-    border-radius: 0.5rem;
-    border: 1px solid var(--teal);
-    color: var(--navy);
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    background-color: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    transition: var(--transition-base);
+}
+
+.option-item:hover {
+    background-color: var(--gray-200);
+}
+
+.option-name {
+    font-weight: 500;
+    color: var(--gray-800);
+}
+
+.option-price {
+    font-weight: 600;
+    color: var(--primary);
+    margin: 0 1rem;
 }
 
 .remove-option-btn {
-    background: var(--teal);
-    color: white;
+    background-color: rgba(224, 32, 32, 0.1);
+    color: var(--error);
     border: none;
-    padding: 0.3rem 0.6rem;
-    border-radius: 0.4rem;
-    cursor: pointer;
-    font-size: 1rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.3s ease-in-out;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: var(--transition-base);
 }
 
 .remove-option-btn:hover {
-    background: var(--navy);
+    background-color: var(--error);
+    color: var(--white);
+}
+
+.no-options {
+    color: var(--gray-500);
+    font-style: italic;
+    text-align: center;
+    padding: 1rem;
+}
+
+/* Pied de billet */
+.ticket-footer {
+    padding: 1.5rem;
+    border-top: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--gray-50);
+    position: relative;
+    overflow: hidden;
+}
+
+.ticket-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(var(--primary-rgb), 0.03), rgba(var(--accent-rgb), 0.03));
+    pointer-events: none;
+}
+
+.price-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.base-price, .options-price, .total-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.price-breakdown .label {
+    color: var(--gray-600);
+    font-size: 0.9rem;
+}
+
+.price-breakdown .value {
+    font-weight: 600;
+    color: var(--gray-800);
+}
+
+.total-price .label, .total-price .value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--secondary);
 }
 
 .ticket-actions {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
     gap: 1rem;
-    flex: 1;
 }
 
-.ticket-actions p {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--navy);
-}
-
-.remove-btn {
-    background: var(--teal);
-    color: white;
+.remove-ticket-btn {
+    background-color: rgba(224, 32, 32, 0.1);
+    color: var(--error);
     border: none;
-    padding: 0.8rem 1.2rem;
-    border-radius: 0.6rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
     cursor: pointer;
+    transition: var(--transition-base);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.remove-ticket-btn::before {
+    content: '×';
     font-size: 1.2rem;
-    transition: background 0.3s;
+    font-weight: bold;
 }
 
-.remove-btn:hover {
-    background: var(--navy);
+.remove-ticket-btn:hover {
+    background-color: var(--error);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
 }
 
+/* Code-barres */
+.ticket-barcode {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--gray-200);
+    text-align: center;
+    background-color: var(--white);
+    position: relative;
+    overflow: hidden;
+}
+
+.ticket-barcode::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary-light), var(--accent-light));
+    opacity: 0.5;
+}
+
+.barcode-graphic {
+    height: 3rem;
+    margin: 0.5rem auto;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10'%3E%3Cpath fill='%23333' d='M0 0h2v10H0zm3 0h1v10H3zm2 0h2v10H5zm3 0h2v10H8zm3 0h1v10h-1zm2 0h3v10h-3zm4 0h2v10h-2zm3 0h2v10h-2zm3 0h1v10h-1zm2 0h3v10h-3zm4 0h1v10h-1zm8 0h2v10h-2zm3 0h1v10h-1zm2 0h3v10h-3zm4 0h1v10h-1zm2 0h3v10h-3zm6 0h1v10h-1zm2 0h1v10h-1zm5 0h1v10h-1zm2 0h1v10h-1zm2 0h3v10h-3zm4 0h1v10h-1zm3 0h1v10h-1zm2 0h3v10h-3zm4 0h3v10h-3zm4 0h2v10h-2zm3 0h2v10h-2z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.ticket-ref {
+    font-size: 0.9rem;
+    color: var(--gray-600);
+    font-family: monospace;
+    background: var(--gray-50);
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.1em;
+}
+
+/* Conteneur de validation */
 .validate-container {
     display: flex;
     justify-content: center;
-    align-items: center;
     width: 100%;
-    margin-top: 2rem;
+    margin-top: 2.5rem;
 }
 
 .validate-btn {
-    width: 50%;
-    max-width: 600px;
-    padding: 1rem;
-    background: var(--mint);
-    color: var(--navy);
+    background-color: var(--primary);
+    color: var(--white);
     border: none;
-    border-radius: 0.6rem;
-    font-size: 1.5rem;
+    padding: 1rem 2.5rem;
+    border-radius: var(--radius-md);
+    font-size: 1.25rem;
+    font-weight: 600;
     cursor: pointer;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.validate-btn::before {
+    content: '✓';
+    font-size: 1.3rem;
     font-weight: bold;
-    text-align: center;
-    transition: background 0.3s ease-in-out;
 }
 
 .validate-btn:hover {
-    background: var(--teal);
-    color: white;
+    background-color: var(--primary-dark);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
 }
 
+/* Récapitulatif du panier */
 .recap-container {
     background: var(--white);
-    padding: 2rem;
-    border-radius: 1rem;
-    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.2);
+    padding: 2.5rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
     max-width: 800px;
     width: 100%;
-    color: var(--navy);
+    color: var(--gray-800);
+    border: 1px solid var(--gray-200);
+}
+
+.recap-container h3 {
+    color: var(--secondary);
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--gray-200);
 }
 
 .recap-item {
+    padding: 1.5rem;
+    background-color: var(--gray-100);
+    border-radius: var(--radius-md);
     margin-bottom: 1.5rem;
+    border: 1px solid var(--gray-200);
+}
+
+.recap-item p {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.recap-item strong {
+    color: var(--secondary);
+}
+
+.recap-container h4 {
+    font-size: 1.5rem;
+    color: var(--secondary);
+    margin: 2rem 0;
+    text-align: right;
+    padding-top: 1rem;
+    border-top: 1px solid var(--gray-200);
+    font-weight: 700;
 }
 
 .recap-actions {
@@ -191,17 +577,267 @@
 .cancel-btn, .confirm-btn {
     padding: 0.8rem 1.5rem;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-md);
     font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
+    transition: var(--transition-smooth);
 }
 
 .cancel-btn {
-    background: var(--teal);
-    color: white;
+    background-color: rgba(224, 32, 32, 0.1);
+    color: var(--error);
+}
+
+.cancel-btn:hover {
+    background-color: var(--error);
+    color: var(--white);
 }
 
 .confirm-btn {
-    background: var(--mint);
-    color: var(--navy);
+    background-color: var(--primary);
+    color: var(--white);
+    box-shadow: var(--shadow-md);
 }
+
+.confirm-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Styles pour le récapitulatif */
+.recap-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.recap-journey {
+    font-size: 1.4rem;
+    color: var(--secondary);
+    margin: 0;
+    font-weight: 700;
+}
+
+.recap-train-ref {
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 0.35rem 0.8rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.recap-details {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.recap-detail {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-label {
+    font-size: 0.85rem;
+    color: var(--gray-600);
+    margin-bottom: 0.25rem;
+}
+
+.detail-value {
+    font-weight: 600;
+    color: var(--gray-800);
+}
+
+.recap-options {
+    background-color: var(--gray-100);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.5rem;
+}
+
+.options-label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--gray-600);
+    margin-bottom: 0.75rem;
+}
+
+.recap-options .options-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.recap-options .option-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0.75rem;
+    background-color: var(--white);
+    border-radius: var(--radius-sm);
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--gray-200);
+}
+
+.recap-options .option-name {
+    color: var(--gray-800);
+}
+
+.recap-options .option-price {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.recap-options .no-options {
+    color: var(--gray-500);
+    font-style: italic;
+    text-align: center;
+}
+
+.recap-item-price {
+    background-color: var(--white);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--gray-200);
+}
+
+.recap-item-price > div {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+}
+
+.price-label {
+    color: var(--gray-600);
+}
+
+.price-value {
+    font-weight: 600;
+    color: var(--gray-800);
+}
+
+.item-total {
+    border-top: 1px solid var(--gray-200);
+    padding-top: 0.75rem !important;
+    margin-top: 0.25rem;
+}
+
+.item-total .price-label,
+.item-total .price-value {
+    font-weight: 700;
+    color: var(--secondary);
+}
+
+.recap-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--secondary);
+    color: var(--white);
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--radius-md);
+    margin: 2rem 0;
+}
+
+.total-label {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.total-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+
+/* Style pour le message de panier vide */
+.empty-cart-message {
+    background-color: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 3rem;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    max-width: 500px;
+    margin: 0 auto;
+    border: 1px solid var(--gray-200);
+}
+
+.empty-cart-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: var(--gray-400);
+}
+
+.empty-cart-message h3 {
+    font-size: 1.8rem;
+    color: var(--gray-800);
+    margin-bottom: 1rem;
+}
+
+.empty-cart-message p {
+    color: var(--gray-600);
+    margin-bottom: 2rem;
+}
+
+.back-to-search-btn {
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.back-to-search-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Style pour le bouton de validation avec le total */
+.validate-btn {
+    position: relative;
+    padding-right: 4rem !important;
+}
+
+.total-amount {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--radius-sm);
+    font-size: 1.1rem;
+}
+
+/* Responsive pour les récapitulatifs */
+@media (max-width: 768px) {
+    .recap-details {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .recap-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    
+    .total-amount {
+        position: static;
+        transform: none;
+        display: block;
+        margin-top: 0.5rem;
+    }
+    
+    .validate-btn {
+        padding-right: 1.5rem !important;
+        flex-direction: column;
+    }
+}
+

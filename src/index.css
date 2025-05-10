@@ -1,28 +1,81 @@
 @import "stylesheets/ConnectionForm.css";
 @import "stylesheets/Header.css";
+@import "stylesheets/HomePage.css";
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Avenir Next', 'Segoe UI', system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: #333333;
+  background-color: #f5f5f7;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --navy: #2E5077;
-  --teal: #4DA1A9;
-  --mint: #79D7BE;
-  --white: #F6F4F0;
+  /* Nouvelle palette basée sur les couleurs originales */
+  --primary: #4DA1A9; /* Teal original */
+  --primary-dark: #3A8A92;
+  --primary-light: #79D7BE; /* Mint original */
+  --secondary: #2E5077; /* Navy original */
+  --secondary-dark: #1e3f61;
+  --secondary-light: #4978a3;
+  --accent: #79D7BE; /* Mint original */
+  --success: #00a078;
+  --warning: #ffa200;
+  --error: #e02020;
+  --gray-100: #f8f9fa;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #ced4da;
+  --gray-500: #adb5bd;
+  --gray-600: #6c757d;
+  --gray-700: #495057;
+  --gray-800: #343a40;
+  --gray-900: #212529;
+  --white: #F6F4F0; /* White original */
+  
+  /* Variables RGB pour les transitions et opacités */
+  --primary-rgb: 77, 161, 169;
+  --primary-dark-rgb: 58, 138, 146;
+  --primary-light-rgb: 121, 215, 190;
+  --secondary-rgb: 46, 80, 119;
+  --secondary-dark-rgb: 30, 63, 97;
+  --accent-rgb: 121, 215, 190;
+  --success-rgb: 0, 160, 120;
+  --error-rgb: 224, 32, 32;
+  
+  /* Legacy vars (pour compatibilité) */
+  --navy: var(--secondary);
+  --teal: var(--primary);
+  --mint: var(--accent);
+  
+  /* Ombres et effets */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+  
+  /* Animations et transitions */
+  --transition-fast: 0.1s ease;
+  --transition-base: 0.2s ease;
+  --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Bordures */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
 }
 
 body {
   margin: 0;
+  background-color: var(--gray-100);
+  color: var(--gray-800);
 }
 
 .form-container {
@@ -33,9 +86,10 @@ body {
   padding: 2rem;
   width: fit-content;
   background-color: var(--white);
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
   margin: 20px auto;
+  border: 1px solid var(--gray-200);
 }
 
 .row-container {
@@ -43,86 +97,108 @@ body {
   flex-direction: row;
   align-items: center;
   gap: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .travel-type-button {
-  background-color: var(--mint);
-  border: none;
-  color: var(--white);
+  background-color: var(--white);
+  border: 2px solid var(--primary);
+  color: var(--primary);
   padding: 0.8em 1.4em;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 1.1rem;
-  font-family: 'Arial', sans-serif;
-  border-radius: 8px;
-  transition: all 0.3s ease;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: var(--transition-smooth);
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .selected {
-  background-color: var(--teal);
+  background-color: var(--primary);
+  color: var(--white);
 }
 
 .travel-type-button:hover {
-  background-color: var(--teal);
+  background-color: var(--primary-light);
+  color: var(--white);
   transform: translateY(-2px);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-md);
 }
 
 .input-content {
-  padding: 0.8em 1.4em;
+  padding: 1em 1.2em;
   font-size: 1rem;
   width: 15em;
-  font-family: 'Arial', sans-serif;
-  color: var(--navy);
+  color: var(--gray-800);
   background-color: var(--white);
-  border: 0.1em solid #ddd;
-  border-radius: 8px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-md);
   outline: none;
   box-sizing: border-box;
-  transition: border-color 0.3s ease;
+  transition: var(--transition-base);
 }
 
 .input-content:focus {
-  border-color: var(--teal);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(94, 144, 204, 0.2);
 }
 
 .input-label {
   margin-bottom: 0.5em;
-  color: var(--navy);
-  font-weight: bold;
+  color: var(--gray-700);
+  font-weight: 600;
+  font-size: 0.9rem;
 }
 
 .submit-button {
-  padding: 0.8em 1.4em;
-  margin-top: 1rem;
-  background-color: var(--mint);
+  padding: 0.8em 1.6em;
+  margin-top: 1.5rem;
+  background-color: var(--primary);
   border: none;
   color: var(--white);
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 1.1rem;
-  font-family: 'Arial', sans-serif;
-  border-radius: 8px;
-  transition: all 0.3s ease;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: var(--transition-smooth);
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: translateX(-100%);
+  transition: var(--transition-smooth);
+}
+
+.submit-button:hover::after {
+  transform: translateX(100%);
 }
 
 .submit-button:hover {
-  background-color: var(--teal);
+  background-color: var(--primary-dark);
   transform: translateY(-2px);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-md);
 }
 
 .error-message {
-  color: #ff5e5e;
+  color: var(--error);
   margin-top: 0.5rem;
   text-align: center;
+  font-size: 0.9rem;
 }
 
 /* Animation pour le bouton */
@@ -145,18 +221,21 @@ body {
 /* Style pour les messages d'erreur ou de succès */
 .message {
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   margin-top: 1rem;
   text-align: center;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 0.9rem;
 }
 
 .success-message {
-  background-color: #d4edda;
-  color: #155724;
+  background-color: rgba(0, 160, 120, 0.1);
+  color: var(--success);
+  border: 1px solid rgba(0, 160, 120, 0.2);
 }
 
 .error-message {
-  background-color: #f8d7da;
-  color: #721c24;
+  background-color: rgba(224, 32, 32, 0.1);
+  color: var(--error);
+  border: 1px solid rgba(224, 32, 32, 0.2);
 }
