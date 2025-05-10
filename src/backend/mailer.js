@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-async function main() {
+export async function main() {
     // send mail with defined transport object :
     const info = await transporter.sendMail({
         from: `"Test" <${SMTP_USER}>`,

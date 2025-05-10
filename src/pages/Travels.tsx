@@ -1,7 +1,6 @@
 import {Component, useEffect, useState} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './../stylesheets/Travels.css';
-import {useUserContext} from "../components/UserContext.tsx";
 import Travel from "../interfaces/Travel.tsx";
 
 /**
@@ -146,7 +145,6 @@ export const Travels = () => {
     const [loading, setLoading] = useState(true);
     const [cart, setCart] = useState<Travel[]>([]);
     const [showCart, setShowCart] = useState(false);
-    const { connected } = useUserContext(); // Récupère l'état de connexion depuis UserContext
 
     /**
      * Fonction pour ajouter un trajet au panier

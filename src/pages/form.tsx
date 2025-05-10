@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Header } from '../components/Header';
 
 /**
  * Form component for handling travel information input.

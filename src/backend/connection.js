@@ -3,7 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
-import { sendTicketConfirmation } from "./mailer.js";
+import { main } from "./mailer.js";
 
 dotenv.config();
 
@@ -283,7 +283,7 @@ app.post("/api/sendTicketConfirmation", async (req, res) => {
         const commands = Array.isArray(command) ? command : [command];
         
         // Envoi de l'email de confirmation avec tous les billets
-        const result = await sendTicketConfirmation(email, commands);
+        const result = await main();
         
         // Mise à jour de la commande dans la base de données si les billets sont associés à un utilisateur
         const userEmail = commands[0].email;

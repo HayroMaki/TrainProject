@@ -47,30 +47,6 @@ const PaymentComponent: React.FC = () => {
     const navigate = useNavigate();
     const { user } = useUserContext();
     
-    // Données d'exemple à utiliser si le panier est vide (pour le développement)
-    const [fallbackCart] = useState<CartItem[]>([
-        {
-            travel_info: {
-                departure: "Paris",
-                arrival: "Lyon",
-                date: "15/07/2023",
-                time: "10:30",
-                price: 78.50
-            },
-            options: ["PLA_TRA", "INF_SMS"]
-        },
-        {
-            travel_info: {
-                departure: "Lyon",
-                arrival: "Paris",
-                date: "20/07/2023",
-                time: "18:45",
-                price: 82.00
-            },
-            options: ["BAG_SUP"]
-        }
-    ]);
-    
     const [activeStep, setActiveStep] = useState<number>(1);
     const [personalInfo, setPersonalInfo] = useState<PersonalInfo>({
         civility: 'M',
@@ -163,34 +139,6 @@ const PaymentComponent: React.FC = () => {
         }
         
         return journeys;
-    };
-
-    // Calcul du prix total
-    const calculateTotal = () => {
-        let total = 0;
-        
-        if (user.cart && user.cart.length > 0) {
-            total = user.cart.reduce((acc, item) => {
-                // Prix de base du billet
-                let itemPrice = item.travel_info.price;
-                
-                // Ajouter le prix des options
-                if (item.options && item.options.length > 0) {
-                    itemPrice += item.options.reduce((sum, opt) => {
-                        return sum + (optionPrices[opt] || 0);
-                    }, 0);
-                }
-                
-                return acc + itemPrice;
-            }, 0);
-        }
-        
-        // Appliquer la réduction de -10€ si l'utilisateur est connecté et a appliqué le code promo
-        if (isLoggedIn && promoApplied) {
-            total = Math.max(0, total - 10);
-        }
-        
-        return total.toFixed(2);
     };
     
     // Calcul détaillé des prix pour affichage
@@ -472,6 +420,7 @@ const PaymentComponent: React.FC = () => {
                             try {
                                 errorJson = JSON.parse(errorText);
                                 console.error("Erreur lors de l'envoi de l'email:", errorJson.error || errorJson.message || "Erreur serveur");
+                            // eslint-disable-next-line @typescript-eslint/no-unused-vars
                             } catch (e) {
                                 console.error(`Erreur serveur: ${errorText}`);
                             }

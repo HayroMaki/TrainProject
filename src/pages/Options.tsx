@@ -1,10 +1,8 @@
 import { useState, Component } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useUserContext } from '../components/UserContext.tsx';
 import './../stylesheets/Options.css';
 import Travel from "../interfaces/Travel.tsx";
 import { Option } from "../interfaces/Option.tsx";
-import Command from "../interfaces/Command.tsx";
 
 // Prices for each option
 const optionPrices = {
@@ -51,18 +49,17 @@ export const Options = () => {
     const { cart } = location.state || { cart: [] };
     const [selectedOptionsPerTravel, setSelectedOptionsPerTravel] = useState(() => {
         const initialOptions = {};
-        cart.forEach((travel, index) => {
+        cart.forEach((travel, index: number) => {
             initialOptions[index] = travel.options || [];
         });
         return initialOptions;
     });
-    const { setUserCart } = useUserContext();
 
-    const handleOptionChange = (travelIndex, option) => {
+    const handleOptionChange = (travelIndex, option: Option) => {
         setSelectedOptionsPerTravel((prev) => {
             const updatedOptions = { ...prev };
             if (updatedOptions[travelIndex].includes(option)) {
-                updatedOptions[travelIndex] = updatedOptions[travelIndex].filter((opt) => opt !== option);
+                updatedOptions[travelIndex] = updatedOptions[travelIndex].filter((opt: Option) => opt !== option);
             } else {
                 updatedOptions[travelIndex] = [...updatedOptions[travelIndex], option];
             }
@@ -80,7 +77,7 @@ export const Options = () => {
     };
 
     const handleValidate = () => {
-        const updatedCart = cart.map((travel, index) => ({
+        const updatedCart = cart.map((travel, index: number) => ({
             validated: false, // Par défaut, la commande n'est pas validée
             validation_date: null, // Pas de date de validation pour le moment
             options: selectedOptionsPerTravel[index] || [], // Options sélectionnées
