@@ -16,14 +16,14 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Nouvelle palette basée sur les couleurs originales */
-  --primary: #4DA1A9; /* Teal original */
+  /* News palette based on the original colors */
+  --primary: #4DA1A9; /* Original Teal */
   --primary-dark: #3A8A92;
-  --primary-light: #79D7BE; /* Mint original */
-  --secondary: #2E5077; /* Navy original */
+  --primary-light: #79D7BE; /* Original Mint */
+  --secondary: #2E5077; /* Original Navy */
   --secondary-dark: #1e3f61;
   --secondary-light: #4978a3;
-  --accent: #79D7BE; /* Mint original */
+  --accent: #79D7BE; /* Original Mint */
   --success: #00a078;
   --warning: #ffa200;
   --error: #e02020;
@@ -36,9 +36,9 @@
   --gray-700: #495057;
   --gray-800: #343a40;
   --gray-900: #212529;
-  --white: #F6F4F0; /* White original */
+  --white: #F6F4F0; /* Original White */
   
-  /* Variables RGB pour les transitions et opacités */
+  /* RGB colors for the transitions and opacities */
   --primary-rgb: 77, 161, 169;
   --primary-dark-rgb: 58, 138, 146;
   --primary-light-rgb: 121, 215, 190;
@@ -48,23 +48,23 @@
   --success-rgb: 0, 160, 120;
   --error-rgb: 224, 32, 32;
   
-  /* Legacy vars (pour compatibilité) */
+  /* Legacy vars (for compatibility) */
   --navy: var(--secondary);
   --teal: var(--primary);
   --mint: var(--accent);
   
-  /* Ombres et effets */
+  /* Shadows and effects */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
   --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
   
-  /* Animations et transitions */
+  /* Animations and transitions */
   --transition-fast: 0.1s ease;
   --transition-base: 0.2s ease;
   --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   
-  /* Bordures */
+  /* Borders */
   --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 8px;
@@ -201,7 +201,7 @@ body {
   font-size: 0.9rem;
 }
 
-/* Animation pour le bouton */
+/* Animation for the button */
 @keyframes buttonAnimation {
   0% {
     transform: scale(1);
@@ -218,7 +218,7 @@ body {
   animation: buttonAnimation 0.3s ease-in-out;
 }
 
-/* Style pour les messages d'erreur ou de succès */
+/* Style for the error or success messages */
 .message {
   padding: 1rem;
   border-radius: var(--radius-md);

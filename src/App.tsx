@@ -2,7 +2,7 @@ import {Route, HashRouter as Router, Routes } from 'react-router-dom';
 
 import {UserProvider} from "./components/UserContext.tsx";
 
-// Importation des composants de page
+// Page component imports
 import {Connection} from "./pages/Connection.tsx";
 import {Form} from "./pages/form.tsx";
 import {Travels} from "./pages/Travels.tsx";
@@ -15,12 +15,12 @@ import {About} from "./pages/About.tsx";
 import {Contact} from "./pages/Contact.tsx";
 
 /**
- * Composant principal de l'application
+ * Principal component of the application
  * 
- * Configure le routeur et fournit le contexte utilisateur à l'ensemble de l'application.
- * Les Routes définissent les différents chemins de navigation disponibles dans l'application.
+ * Configures the router and gives the user context to the entirety of the application.
+ * The Routes define the different navigation paths available in the application.
  * 
- * @returns {JSX.Element} Le composant racine de l'application
+ * @returns {JSX.Element} The root component of the application
  */
 function App() {
     return (

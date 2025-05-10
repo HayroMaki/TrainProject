@@ -4,7 +4,7 @@ import './../stylesheets/Options.css';
 import Travel from "../interfaces/Travel.tsx";
 import { Option } from "../interfaces/Option.tsx";
 
-// Prices for each option
+// Price for each options
 const optionPrices = {
     [Option.PLA_TRA]: 3,
     [Option.PRI_ELE]: 2,
@@ -78,15 +78,15 @@ export const Options = () => {
 
     const handleValidate = () => {
         const updatedCart = cart.map((travel, index: number) => ({
-            validated: false, // Par défaut, la commande n'est pas validée
-            validation_date: null, // Pas de date de validation pour le moment
-            options: selectedOptionsPerTravel[index] || [], // Options sélectionnées
-            travel_info: travel, // Informations sur le voyage
-            seat: "" // Siège vide, sera sélectionné dans la page de sélection des sièges
+            validated: false, // By default, the command is not valid
+            validation_date: null, // No valid date at the start
+            options: selectedOptionsPerTravel[index] || [], // Selected options
+            travel_info: travel, // Information about the travel
+            seat: "" // Empty seat, will be selected later
         }));
 
         console.log("Updated Cart (Command):", updatedCart); // Debugging
-        // Au lieu d'aller directement au panier, on va à la page de sélection des sièges
+        // Redirect to the seat selection page
         navigate('/seat-selection', { state: { cart: updatedCart } });
     };
 

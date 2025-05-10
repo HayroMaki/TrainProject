@@ -8,7 +8,7 @@ import { Option } from "../interfaces/Option.tsx";
 import "../stylesheets/Cart.css";
 import { useNavigate } from "react-router-dom";
 
-// Prix des options pour le calcul des prix
+// Price for the options
 const optionPrices = {
     [Option.PLA_TRA]: 3,
     [Option.PRI_ELE]: 2,
@@ -22,13 +22,13 @@ const Cart: React.FC = () => {
     const [showRecap, setShowRecap] = useState(false);
     const navigate = useNavigate();
 
-    // Calcul du prix total du panier
+    // Compute the total price of the cart
     const calculateTotalPrice = () => {
         return user.cart.reduce((total, cmd) => {
-            // Prix de base du billet
+            // Base price of the command
             let itemPrice = cmd.travel_info.price;
             
-            // Ajouter le prix de chaque option
+            // Add the price of the options
             cmd.options.forEach(option => {
                 itemPrice += optionPrices[option] || 0;
             });
@@ -37,7 +37,7 @@ const Cart: React.FC = () => {
         }, 0);
     };
 
-    // Supprimer une option d'un billet
+    // Delete an option from a command
     const removeOption = (commandIndex: number, option: string) => {
         setUserCart(user.cart.map((cmd, i) =>
             i === commandIndex ? {
@@ -47,12 +47,12 @@ const Cart: React.FC = () => {
         ));
     };
 
-    // Supprimer un billet entier
+    // Delete a command
     const removeItem = (commandIndex: number) => {
         setUserCart(user.cart.filter((_, i) => i !== commandIndex));
     };
 
-    // Confirmation du panier puis paiement
+    // Confirm the cart before redirecting
     const handleConfirm = () => {
         console.log("Réservation confirmée !");
         navigate("/payment");

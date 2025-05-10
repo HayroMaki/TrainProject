@@ -84,7 +84,7 @@ export const Inscription = () => {
         e.preventDefault();
         setErrorMessage("");
         
-        // Vérifier tous les champs
+        // Verifies all of the fields
         const isValid = Object.values(formValid).every(value => value);
         
         if (!isValid) {

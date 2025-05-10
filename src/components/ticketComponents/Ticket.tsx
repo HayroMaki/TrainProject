@@ -3,7 +3,7 @@ import React from "react";
 import Command from "../../interfaces/Command.tsx";
 import { Option } from "../../interfaces/Option.tsx";
 
-// Prix des options pour le calcul des prix
+// Price of the options
 const optionPrices = {
     [Option.PLA_TRA]: 3,
     [Option.PRI_ELE]: 2,
@@ -12,7 +12,7 @@ const optionPrices = {
     [Option.GAR_ANN]: 2.9
 };
 
-// Fonction pour formater joliment la durée
+// Format the duration
 export const goodDuree = (duree: number): string => {
     const heures = Math.floor(duree / 60);
     const minutes = duree % 60;
@@ -27,27 +27,27 @@ interface TicketProps {
 }
 
 const Ticket: React.FC<TicketProps> = ({ command, index, removeOption, removeItem }) => {
-    // Calcul du prix de base et des options
+    // Computes the base price and their options
     const basePrice = command.travel_info.price;
     const optionsPrice = command.options.reduce((total, option) => {
         return total + (optionPrices[option] || 0);
     }, 0);
     const totalPrice = basePrice + optionsPrice;
 
-    // Extraire le numéro de voiture et le siège du format "voiture-rangéeLettre"
+    // Extract the car number and the seat
     const extractSeatInfo = (seatString: string) => {
-        // Si le siège a le format attendu (ex: "2-5A"), on extrait la voiture et le siège
+        // If the seat follows the correct format (eg. : "2-5A"), extract the car and the seat
         if (seatString && seatString.includes('-')) {
             const [carNumber, seatNumber] = seatString.split('-');
             return { car: carNumber, seat: seatNumber };
         }
-        // Sinon, on utilise le format existant pour rétrocompatibilité
+        // Otherwise, use the existing format for backward compatibility
         return { car: Math.floor(Math.random() * 9) + 1, seat: seatString };
     };
 
     const seatInfo = extractSeatInfo(command.seat);
 
-    // Génère une classe CSS pour le type de train
+    // Generate a CSS class for the train type
     const getTrainTypeClass = (trainRef: string) => {
         if (trainRef.startsWith("TGV")) return "train-tgv";
         if (trainRef.startsWith("TER")) return "train-ter";

@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import "../stylesheets/Contact.css";
 
 /**
- * Composant de la page "Contact"
+ * Component of the "Contact" page
  * 
- * Cette page permet aux utilisateurs de contacter l'équipe SwiftRail
- * via un formulaire, affiche les informations de contact, et présente
- * une section FAQ pour répondre aux questions courantes.
+ * This page allows users to contact the SwiftRail team with a form,
+ * show their contact informations, and present a section with a FAQ.
  * 
- * @returns {JSX.Element} Le composant de la page Contact
+ * @returns {JSX.Element} The component of the "Contact" page
  */
 export const Contact = () => {
-    // État pour stocker les données du formulaire
+    // State to store the data of the form
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -19,7 +18,7 @@ export const Contact = () => {
         message: ""
     });
     
-    // État pour gérer le statut de soumission du formulaire
+    // State to handle the submission of the form
     const [formStatus, setFormStatus] = useState({
         submitted: false,
         error: false,
@@ -27,8 +26,8 @@ export const Contact = () => {
     });
     
     /**
-     * Gère les modifications dans les champs du formulaire
-     * @param {React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>} e - Événement de changement
+     * Handle the modifications of the form
+     * @param {React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>} e - Change events
      */
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -39,13 +38,13 @@ export const Contact = () => {
     };
     
     /**
-     * Gère la soumission du formulaire
-     * @param {React.FormEvent} e - Événement de soumission
+     * Handle the submission of the form
+     * @param {React.FormEvent} e - Submission event
      */
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         
-        // Validation basique des champs obligatoires
+        // Basic verifications of the necessary data
         if (!formData.name || !formData.email || !formData.message) {
             setFormStatus({
                 submitted: true,
@@ -55,14 +54,14 @@ export const Contact = () => {
             return;
         }
         
-        // Simulation d'envoi du formulaire (à remplacer par une véritable API)
+        // Simulate an API call to send the message
         setTimeout(() => {
             setFormStatus({
                 submitted: true,
                 error: false,
                 message: "Votre message a été envoyé avec succès. Notre équipe vous contactera rapidement."
             });
-            // Réinitialisation du formulaire après envoi
+            // Reset the form after submission
             setFormData({
                 name: "",
                 email: "",
@@ -75,7 +74,7 @@ export const Contact = () => {
     return (
         <div className="contact-page">
             <main className="contact-container">
-                {/* Section d'en-tête avec titre et introduction */}
+                {/* Header with title and catchphrase */}
                 <section className="contact-header">
                     <h1>Contactez-nous</h1>
                     <p className="contact-intro">
@@ -85,20 +84,20 @@ export const Contact = () => {
                 </section>
                 
                 <div className="contact-content">
-                    {/* Section avec le formulaire de contact */}
+                    {/* Section with the contact form */}
                     <section className="contact-form-section">
                         <h2>Envoyez-nous un message</h2>
                         
-                        {/* Affichage des messages de statut après soumission */}
+                        {/* Show the status message after submission */}
                         {formStatus.submitted && (
                             <div className={`form-status ${formStatus.error ? 'error' : 'success'}`}>
                                 {formStatus.message}
                             </div>
                         )}
                         
-                        {/* Formulaire de contact */}
+                        {/* Contact form */}
                         <form className="contact-form" onSubmit={handleSubmit}>
-                            {/* Champ pour le nom */}
+                            {/* Name field */}
                             <div className="form-group">
                                 <label htmlFor="name">Nom complet <span className="required">*</span></label>
                                 <input
@@ -112,7 +111,7 @@ export const Contact = () => {
                                 />
                             </div>
                             
-                            {/* Champ pour l'email */}
+                            {/* Email field */}
                             <div className="form-group">
                                 <label htmlFor="email">Email <span className="required">*</span></label>
                                 <input
@@ -126,7 +125,7 @@ export const Contact = () => {
                                 />
                             </div>
                             
-                            {/* Menu déroulant pour le sujet */}
+                            {/* Dropdown for the subject */}
                             <div className="form-group">
                                 <label htmlFor="subject">Sujet</label>
                                 <select
@@ -144,7 +143,7 @@ export const Contact = () => {
                                 </select>
                             </div>
                             
-                            {/* Zone de texte pour le message */}
+                            {/* Text area for the message */}
                             <div className="form-group">
                                 <label htmlFor="message">Message <span className="required">*</span></label>
                                 <textarea
@@ -158,7 +157,7 @@ export const Contact = () => {
                                 ></textarea>
                             </div>
                             
-                            {/* Bouton d'envoi */}
+                            {/* Submit button */}
                             <button type="submit" className="submit-button">
                                 Envoyer le message
                             </button>
