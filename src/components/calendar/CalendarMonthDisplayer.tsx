@@ -9,7 +9,7 @@ export const CalendarMonthDisplayer = (props: {
     return (
         <div className="CalendarMonthDisplayer">
             <button className="MonthChanger" onClick={() => { props.monthChangeHandler(false) }}>{"<"}</button>
-            <span className="MonthName">{MONTHS.at(props.month)} {props.year}</span>
+            <span className="MonthName">{MONTHS[props.month]} {props.year}</span>
             <button className="MonthChanger" onClick={() => { props.monthChangeHandler(true) }}>{">"}</button>
         </div>
     )
