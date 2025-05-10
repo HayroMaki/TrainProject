@@ -8,15 +8,15 @@ interface SeatSelectorProps {
 }
 
 export const SeatSelector: React.FC<SeatSelectorProps> = ({ carNumber, onSeatSelect, initialSelectedSeat }) => {
-  // État pour suivre le siège sélectionné
+  // State to follow the selected seat
   const [selectedSeat, setSelectedSeat] = useState<string | null>(initialSelectedSeat || null);
   
-  // État pour les sièges déjà pris (simulé)
+  // State for the already occupied seats
   const [occupiedSeats, setOccupiedSeats] = useState<string[]>([]);
   
-  // Générer des sièges aléatoirement occupés au chargement
+  // Generate random occupied seats on load
   useEffect(() => {
-    // Simulation des sièges occupés (environ 30% des sièges)
+    // Simulate random seats (around 30%)
     const generateOccupiedSeats = () => {
       const occupied: string[] = [];
       const rows = 16;
@@ -40,7 +40,7 @@ export const SeatSelector: React.FC<SeatSelectorProps> = ({ carNumber, onSeatSel
     setOccupiedSeats(generateOccupiedSeats());
   }, [carNumber]);
   
-  // Gestion de la sélection d'un siège
+  // Seat selection handler
   const handleSeatClick = (seatId: string) => {
     if (occupiedSeats.includes(seatId)) {
       return; // Siège déjà occupé
@@ -50,14 +50,14 @@ export const SeatSelector: React.FC<SeatSelectorProps> = ({ carNumber, onSeatSel
     onSeatSelect(`${carNumber}-${seatId}`);
   };
   
-  // Rendu des sièges dans le wagon
+  // Seat rendering
   const renderSeats = () => {
     const rows = [];
     
     for (let rowNum = 1; rowNum <= 16; rowNum++) {
       const rowSeats = [];
       
-      // Siège A (fenêtre gauche)
+      // Seat A (left window)
       rowSeats.push(
         <div 
           key={`${rowNum}A`} 
@@ -69,7 +69,7 @@ export const SeatSelector: React.FC<SeatSelectorProps> = ({ carNumber, onSeatSel
         </div>
       );
       
-      // Siège B (couloir gauche)
+      // Seat B (left corridor)
       rowSeats.push(
         <div 
           key={`${rowNum}B`} 
@@ -81,10 +81,10 @@ export const SeatSelector: React.FC<SeatSelectorProps> = ({ carNumber, onSeatSel
         </div>
       );
       
-      // Allée centrale
+      // Middle corridor
       rowSeats.push(<div key={`aisle-${rowNum}`} className="aisle"></div>);
       
-      // Siège C (couloir droit)
+      // Seat C (right corridor)
       rowSeats.push(
         <div 
           key={`${rowNum}C`} 
@@ -96,7 +96,7 @@ export const SeatSelector: React.FC<SeatSelectorProps> = ({ carNumber, onSeatSel
         </div>
       );
       
-      // Siège D (fenêtre droite)
+      // Seat D (right window)
       rowSeats.push(
         <div 
           key={`${rowNum}D`} 

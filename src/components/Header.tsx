@@ -28,11 +28,11 @@ export const Header = () => {
                 expiration_date: "",
             }
         });
-        // Fermer le dropdown après déconnexion
+        // Close the dropdown after disconnecting
         setDropdownOpen(false);
     };
 
-    // Gestionnaire pour fermer le dropdown en cliquant ailleurs
+    // Allows the dropdown to close when clicking outside
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -40,12 +40,12 @@ export const Header = () => {
             }
         };
 
-        // Ajouter l'écouteur d'événement seulement si le dropdown est ouvert
+        // Add the listener only if the dropdown is open
         if (dropdownOpen) {
             document.addEventListener('mousedown', handleClickOutside);
         }
 
-        // Nettoyer l'écouteur d'événement
+        // Delete the listener
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };

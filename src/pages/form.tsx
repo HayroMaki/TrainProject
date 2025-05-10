@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 export const Form = () => {
     const navigate = useNavigate();
 
-    // Référence pour le carrousel
+    // Carrousel reference
     const sliderRef = useRef<HTMLDivElement>(null);
 
     // State variables
@@ -21,10 +21,10 @@ export const Form = () => {
     const [slidesPerView, setSlidesPerView] = useState(3); // Nombre de slides par vue
     const [failedImages, setFailedImages] = useState<Record<number, boolean>>({}); // Pour gérer les images qui échouent
 
-    // Image de secours au cas où une image ne se charge pas
+    // Fallback image
     const fallbackImage = "https://images.unsplash.com/photo-1513805549689-48b5fb3b77fb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80";
     
-    // Fonction de gestion des erreurs d'image
+    // Handler for the image errors
     const handleImageError = (index: number) => {
         setFailedImages({...failedImages, [index]: true});
     };
@@ -117,7 +117,7 @@ export const Form = () => {
         }
     ];
 
-    // Calculer le nombre de slides visibles en fonction de la largeur
+    // Compute the visible slides depending on the width
     useEffect(() => {
         const calculateSlidesPerView = () => {
             if (window.innerWidth < 768) {
@@ -132,13 +132,13 @@ export const Form = () => {
         calculateSlidesPerView();
         window.addEventListener('resize', calculateSlidesPerView);
         
-        // Auto-scroll du carrousel toutes les 5 secondes
+        // Auto-scroll the carrousel every 5 seconds
         const autoScrollInterval = setInterval(() => {
             if (sliderRef.current) {
                 const slider = sliderRef.current;
                 const totalSlides = Math.ceil(popularDestinations.length / slidesPerView);
                 
-                // Passage au slide suivant ou retour au début
+                // Go to the next slide or the first one
                 const nextIndex = (activeCarouselIndex + 1) % totalSlides;
                 slider.scrollTo({ 
                     left: nextIndex * slider.clientWidth, 

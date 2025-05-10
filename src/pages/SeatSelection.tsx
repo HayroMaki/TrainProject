@@ -11,17 +11,17 @@ export const SeatSelection: React.FC = () => {
   const { cart: contextCart } = location.state || { cart: [] };
   const { setUserCart } = useUserContext();
   
-  // État pour stocker les sièges sélectionnés pour chaque voyage
+  // State to store the selected seats for each trip
   const [selectedSeats, setSelectedSeats] = useState<Record<number, string>>({});
-  // État pour suivre le voyage actuellement affiché
+  // State to follow the shown travel
   const [currentTravelIndex, setCurrentTravelIndex] = useState<number>(0);
-  // État pour les numéros de voiture (1-7 généralement dans un train)
+  // State for the car numbers (1-7)
   const [selectedCar, setSelectedCar] = useState<number>(1);
   
-  // Récupère le voyage actuel
+  // Fetches the current travel
   const currentTravel = contextCart[currentTravelIndex];
   
-  // Gère la sélection d'un siège
+  // Handle the selection of a seat
   const handleSeatSelect = (seat: string) => {
     setSelectedSeats(prev => ({
       ...prev,
@@ -29,26 +29,26 @@ export const SeatSelection: React.FC = () => {
     }));
   };
   
-  // Passe au voyage suivant
+  // Handle the next button
   const handleNext = () => {
     if (currentTravelIndex < contextCart.length - 1) {
       setCurrentTravelIndex(currentTravelIndex + 1);
     } else {
-      // Si c'est le dernier voyage, finaliser et aller au panier
+      // If it's the last trip, end and go to the cart
       finalizeSelection();
     }
   };
   
-  // Retourne au voyage précédent
+  // Handle the previous button
   const handlePrevious = () => {
     if (currentTravelIndex > 0) {
       setCurrentTravelIndex(currentTravelIndex - 1);
     }
   };
   
-  // Finalise la sélection et passe à la page suivante
+  // Ends the selection and redirects to the cart page
   const finalizeSelection = () => {
-    // Vérifie si tous les voyages ont un siège sélectionné
+    // Checks if all the seats of the trips were selected
     const allSeatsSelected = contextCart.every((_: Command, index: number) => selectedSeats[index]);
     
     if (!allSeatsSelected) {
@@ -56,7 +56,7 @@ export const SeatSelection: React.FC = () => {
       return;
     }
     
-    // Met à jour le panier avec les sièges sélectionnés
+    // Updates the cart with the selected seats
     const updatedCart = contextCart.map((travel: Command, index: number) => ({
       ...travel,
       seat: selectedSeats[index]
@@ -66,7 +66,7 @@ export const SeatSelection: React.FC = () => {
     navigate('/cart', { state: { cart: updatedCart } });
   };
   
-  // Si pas de voyages, rediriger vers la page principale
+  // If there are no trips, redirect to the home page
   if (contextCart.length === 0) {
     navigate('/');
     return null;

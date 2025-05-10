@@ -2,7 +2,7 @@ import React from "react";
 import Command from "../interfaces/Command.tsx";
 import { Option } from "../interfaces/Option.tsx";
 
-// Prix des options pour le calcul des prix
+// Price of the options
 const optionPrices = {
     [Option.PLA_TRA]: 3,
     [Option.PRI_ELE]: 2,
@@ -18,7 +18,7 @@ interface CartRecapProps {
 }
 
 const CartRecap: React.FC<CartRecapProps> = ({ cart, onCancel, onConfirm }) => {
-    // Calcul du prix total avec les options
+    // Compute the total price with the options
     const calculateItemTotal = (cmd: Command) => {
         const basePrice = cmd.travel_info.price;
         const optionsPrice = cmd.options.reduce((sum, option) => {
@@ -27,7 +27,7 @@ const CartRecap: React.FC<CartRecapProps> = ({ cart, onCancel, onConfirm }) => {
         return basePrice + optionsPrice;
     };
 
-    // Calcul du total du panier
+    // Compute the total price of the cart
     const total = cart.reduce((sum, cmd) => sum + calculateItemTotal(cmd), 0);
 
     return (
@@ -68,7 +68,7 @@ const CartRecap: React.FC<CartRecapProps> = ({ cart, onCancel, onConfirm }) => {
                                             <span className="option-name">{option}</span>
                                             <span className="option-price">+{optionPrices[option]}€</span>
                                         </li>
-            ))}
+                                    ))}
                                 </ul>
                             ) : (
                                 <span className="no-options">Aucune option</span>

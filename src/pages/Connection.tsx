@@ -15,6 +15,7 @@ export const Connection = () => {
     let email: HTMLInputElement;
     let password: HTMLInputElement;
 
+    // Retrieve the containers for the inputs
     useEffect(() => {
         email = document.getElementById("email") as HTMLInputElement;
         password = document.getElementById("password") as HTMLInputElement;
@@ -22,6 +23,8 @@ export const Connection = () => {
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
+
+        // Reset the error message
         setErrorMessage("");
         
         if (!mailRegex.test(email.value)) {
@@ -34,6 +37,7 @@ export const Connection = () => {
             return;
         }
 
+        // Check if the user exists
         const checkUser = async (mail: string, pwd: string) => {
             try {
                 const response = await fetch(`http://localhost:5000/api/checkUser`, {

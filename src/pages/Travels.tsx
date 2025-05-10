@@ -4,9 +4,9 @@ import './../stylesheets/Travels.css';
 import Travel from "../interfaces/Travel.tsx";
 
 /**
- * Fonction utilitaire pour formater une date
- * @param dateString - La chaîne de date à formater
- * @returns La date formatée en français (ex: lundi 1 janvier 2024)
+ * Utility function to format the date
+ * @param dateString - The date string to format
+ * @returns The formatted date in french (eg. : lundi 1 janvier 2024)
  */
 const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -19,9 +19,9 @@ const formatDate = (dateString: string) => {
 };
 
 /**
- * Fonction utilitaire pour formater une date pour les requêtes API (YYYY-MM-DD)
- * @param dateString - La chaîne de date à formater
- * @returns La date au format YYYY-MM-DD
+ * Utility function to format the date for the API call
+ * @param dateString - The date string to format
+ * @returns The date in the format YYYY-MM-DD
  */
 const formatDateForAPI = (dateString: string) => {
     const date = new Date(dateString);
@@ -29,9 +29,9 @@ const formatDateForAPI = (dateString: string) => {
 };
 
 /**
- * Fonction utilitaire pour formater une durée en heures et minutes
- * @param minutes - La durée en minutes
- * @returns La durée formatée (ex: 2h30min)
+ * Utility function to format a duration in hour and minutes
+ * @param minutes - The duration in minutes
+ * @returns The formatted duration (eg. : 2h30min)
  */
 const formatDuration = (minutes: number) => {
     const hours = Math.floor(minutes / 60);
@@ -40,11 +40,11 @@ const formatDuration = (minutes: number) => {
 };
 
 /**
- * Fonction utilitaire pour calculer l'heure d'arrivée
- * @param departureDate - La date de départ
- * @param departureTime - L'heure de départ
- * @param duration - La durée du trajet en minutes
- * @returns L'heure d'arrivée formatée
+ * Utility function to compute the arrival date
+ * @param departureDate - The departure date
+ * @param departureTime - The departure time
+ * @param duration - The duration of the trip
+ * @returns The formatted arrival time
  */
 const calculateArrivalTime = (departureDate: string, departureTime: string, duration: number) => {
     const [hours, minutes] = departureTime.split(':');
@@ -65,11 +65,11 @@ const calculateArrivalTime = (departureDate: string, departureTime: string, dura
 };
 
 /**
- * Composant pour afficher une carte de voyage individuelle
- * @param travel - Les informations du trajet
- * @param onAddToCart - Fonction pour ajouter au panier
- * @param isReturn - Indique s'il s'agit d'un trajet retour
- * @param isBestDeal - Indique s'il s'agit du meilleur prix (bon plan)
+ * Component to show the map of trips
+ * @param travel - The information of the trip
+ * @param onAddToCart - Function to add to the cart
+ * @param isReturn - Tells if the trip is return
+ * @param isBestDeal - Tells if the trip is the best deal (lowest price)
  */
 class TravelCard extends Component<{ 
     travel: Travel, 
@@ -101,10 +101,10 @@ class TravelCard extends Component<{
 }
 
 /**
- * Composant pour afficher le panier
- * @param cart - Les trajets dans le panier
- * @param onRemoveFromCart - Fonction pour retirer un trajet du panier
- * @param onClose - Fonction pour fermer le panier
+ * Component to show the cart
+ * @param cart - The trips of the cart
+ * @param onRemoveFromCart - Function to remove a trip from the cart
+ * @param onClose - Function to close the cart
  */
 class Cart extends Component<{ cart: Travel[], onRemoveFromCart: (index: number) => void, onClose: () => void }> {
     render() {
@@ -131,10 +131,10 @@ class Cart extends Component<{ cart: Travel[], onRemoveFromCart: (index: number)
 }
 
 /**
- * Composant principal d'affichage des trajets disponibles
- * Ce composant affiche les trajets aller et retour disponibles,
- * met en évidence le trajet avec le meilleur prix (bon plan),
- * et permet à l'utilisateur d'ajouter des trajets à son panier.
+ * Principal component to show the available trips.
+ * This component shows the available one way and round trips,
+ * highlights the trip with the best deal and allows the user
+ * to add it to their cart.
  */
 export const Travels = () => {
     const location = useLocation();
@@ -147,24 +147,24 @@ export const Travels = () => {
     const [showCart, setShowCart] = useState(false);
 
     /**
-     * Fonction pour ajouter un trajet au panier
-     * @param travel - Le trajet à ajouter au panier
+     * Function to add a trip to the cart
+     * @param travel - The trip to add
      */
     const addToCart = (travel: Travel) => {
         setCart([...cart, travel]);
-        // Ajoute une classe d'animation
+        // Adds an animation class
         const cartButton = document.querySelector('.cart-button') as HTMLButtonElement;
         cartButton.classList.add('animate-cart');
 
-        // Supprime la classe après l'animation
+        // Deletes the animation after it ends
         setTimeout(() => {
             cartButton.classList.remove('animate-cart');
-        }, 500); // Durée de l'animation en millisecondes
+        }, 500); // Duration of the animation
     };
 
     /**
-     * Fonction pour retirer un trajet du panier
-     * @param index - L'index du trajet à retirer
+     * Function to remove a trip from the cart
+     * @param index - Index of the trip to remove
      */
     const removeFromCart = (index: number) => {
         const newCart = cart.filter((_, i) => i !== index);
@@ -172,16 +172,16 @@ export const Travels = () => {
     };
 
     /**
-     * Fonction pour valider le panier et passer à l'étape suivante
+     * Function to confirm the cart
      */
     const handleValidate = () => {
         navigate('/options', { state: { cart } });
     };
 
     /**
-     * Trouve l'index du trajet avec le prix le plus bas
-     * @param travelsList - Liste des trajets à analyser
-     * @returns L'index du trajet le moins cher
+     * Finds the index of the best deal trip
+     * @param travelsList - List of trips to analyze
+     * @returns The index of the best deal trip
      */
     const findBestDealIndex = (travelsList: Travel[]) => {
         if (travelsList.length === 0) return -1;
@@ -199,12 +199,12 @@ export const Travels = () => {
         return bestDealIndex;
     };
 
-    // Récupère les trajets en fonction des données du formulaire
+    // Fetches the trips according to the form data
     useEffect(() => {
         if (formData) {
             const fetchTravels = async () => {
                 try {
-                    // Vérifie et formate les dates pour l'API si nécessaire
+                    // Verifies and formats the dates for the API if necessary
                     const departureDate = formData.departureDate.includes('-') 
                         ? formData.departureDate 
                         : formatDateForAPI(formData.departureDate);
@@ -216,7 +216,7 @@ export const Travels = () => {
                             : formatDateForAPI(formData.arrivalDate);
                     }
                     
-                    // Log pour vérifier les données du formulaire
+                    // Log to verify the form's data
                     console.log("Form data:", {
                         ...formData,
                         departureDate,
@@ -234,7 +234,7 @@ export const Travels = () => {
                     setTravels(data);
                     console.log("Aller travels:", data);
 
-                    // Si c'est un aller-retour, récupère les trajets retour
+                    // If it's a round trip, fetch the return trips
                     if (formData.isRoundTrip && arrivalDate) {
                         const returnQueryParams = new URLSearchParams({
                             departure: formData.arrival,
@@ -262,7 +262,7 @@ export const Travels = () => {
         }
     }, [formData]);
 
-    // Trouve les index des trajets avec les meilleurs prix
+    // Finds the index of the best deal trip
     const bestDealIndex = findBestDealIndex(travels);
     const bestReturnDealIndex = findBestDealIndex(returnTravels);
 
@@ -272,7 +272,7 @@ export const Travels = () => {
 
     return (
         <div className="travels-container">
-            {/* Barre d'informations sur le trajet */}
+            {/* Information bar about the trip */}
             {formData && (
                 <div className="trip-info-bar">
                     <div className="trip-route">
@@ -295,17 +295,17 @@ export const Travels = () => {
                 </div>
             )}
 
-            {/* Bouton du panier */}
+            {/* Cart button */}
             <button className="cart-button" onClick={() => setShowCart(!showCart)}>
                 🛒 Panier ({cart.length})
             </button>
 
-            {/* Bouton de validation */}
+            {/* Confirmation button */}
             <button className="validate-button" onClick={handleValidate} disabled={cart.length === 0}>
                 Valider
             </button>
 
-            {/* Popup du panier */}
+            {/* Cart popup */}
             {showCart && (
                 <Cart
                     cart={cart}

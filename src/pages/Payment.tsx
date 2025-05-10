@@ -3,7 +3,7 @@ import "../stylesheets/payment.css";
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from '../components/UserContext';
 
-// Interfaces simples
+// Simple interfaces
 interface PersonalInfo {
     civility: string;
     firstName: string;
@@ -20,7 +20,7 @@ interface PaymentDetails {
     cardholderName: string;
 }
 
-// Interface pour les voyages exemple
+// Interface for the example trips
 interface TravelInfo {
     departure: string;
     arrival: string;
@@ -34,7 +34,7 @@ interface CartItem {
     options: string[];
 }
 
-// Prix des options
+// Price of the options
 const optionPrices: {[key: string]: number} = {
     "PLA_TRA": 3,
     "PRI_ELE": 2,
@@ -76,7 +76,7 @@ const PaymentComponent: React.FC = () => {
     const [promoCode, setPromoCode] = useState<string>('');
     const [receiveNewsletter, setReceiveNewsletter] = useState<boolean>(false);
     
-    // Vérifier si le panier est vide et rediriger si nécessaire
+    // Verify if the cart is empty and redirect if necessary
     useEffect(() => {
         if (!user.cart || user.cart.length === 0) {
             console.warn("Le panier est vide, redirection vers la page du panier");
@@ -84,7 +84,7 @@ const PaymentComponent: React.FC = () => {
         }
     }, [user.cart, navigate]);
 
-    // Appliquer automatiquement le code promo lorsque l'utilisateur se connecte
+    // Apply automatically the promotion code when the user logs in
     useEffect(() => {
         if (isLoggedIn) {
             setPromoCode('SWIFTRAIL10');
@@ -92,7 +92,7 @@ const PaymentComponent: React.FC = () => {
         }
     }, [isLoggedIn]);
     
-    // Identifier les trajets aller et retour
+    // Identify the type of the trips
     const identifyJourneyType = () => {
         if (!user.cart || user.cart.length <= 1) return { oneway: user.cart || [], return: [] };
         
@@ -101,7 +101,7 @@ const PaymentComponent: React.FC = () => {
             return: []
         };
 
-        // Créer un tableau pour suivre les trajets déjà traités
+        // Array to store the processed trips
         const processedIndexes: number[] = [];
         
         for (let i = 0; i < user.cart.length; i++) {
@@ -110,18 +110,18 @@ const PaymentComponent: React.FC = () => {
             const currentJourney = user.cart[i];
             let hasReturn = false;
             
-            // Chercher un éventuel trajet retour
+            // Search for a potential return trip
             for (let j = i + 1; j < user.cart.length; j++) {
                 if (processedIndexes.includes(j)) continue;
                 
                 const potentialReturn = user.cart[j];
                 
-                // Si l'origine du trajet potentiel correspond à la destination du trajet actuel
-                // et si la destination du trajet potentiel correspond à l'origine du trajet actuel
+                // If the departure potential trip is the current trip's arrival and
+                // if the arrival potential trip is the current trip's departure,
                 if (potentialReturn.travel_info.departure === currentJourney.travel_info.arrival && 
                     potentialReturn.travel_info.arrival === currentJourney.travel_info.departure) {
                     
-                    // On a trouvé un aller-retour
+                    // Found a round trip
                     journeys.oneway.push(currentJourney);
                     journeys.return.push(potentialReturn);
                     
@@ -131,7 +131,7 @@ const PaymentComponent: React.FC = () => {
                 }
             }
             
-            // Si aucun retour n'a été trouvé, c'est un aller simple
+            // If no return trip was found, it is a one way trip
             if (!hasReturn && !processedIndexes.includes(i)) {
                 journeys.oneway.push(currentJourney);
                 processedIndexes.push(i);
@@ -141,7 +141,7 @@ const PaymentComponent: React.FC = () => {
         return journeys;
     };
     
-    // Calcul détaillé des prix pour affichage
+    // Details of the price to show
     const getPriceDetails = () => {
         const details = {
             basePriceTotal: 0,
@@ -152,10 +152,10 @@ const PaymentComponent: React.FC = () => {
         
         if (user.cart && user.cart.length > 0) {
             user.cart.forEach(item => {
-                // Accumulation des prix de base
+                // Total of the base prices
                 details.basePriceTotal += item.travel_info.price;
                 
-                // Accumulation des prix des options
+                // Total of the option prices
                 if (item.options && item.options.length > 0) {
                     const itemOptionsPrice = item.options.reduce((sum, opt) => {
                         return sum + (optionPrices[opt] || 0);
@@ -193,10 +193,10 @@ const PaymentComponent: React.FC = () => {
     
     const handleLoginSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Simulation d'une connexion réussie
+        // Simulate a succesful connection
         setIsLoggedIn(true);
         setShowLoginForm(false);
-        // Pré-remplir le nom avec les infos du compte
+        // Automatically fill in the stored information
         setPersonalInfo(prev => ({
             ...prev,
             firstName: "Jean",
@@ -221,11 +221,11 @@ const PaymentComponent: React.FC = () => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         
-        // Formatage automatique du numéro de carte
+        // Automatically format the card number
         if (name === 'cardNumber') {
             const sanitizedValue = value.replace(/\D/g, '').slice(0, 16);
             
-            // Ajouter des espaces tous les 4 chiffres pour l'affichage
+            // Add a space every 4 characters
             const formattedValue = sanitizedValue.replace(/(\d{4})(?=\d)/g, '$1 ');
             
             setPaymentDetails(prevDetails => ({
@@ -235,7 +235,7 @@ const PaymentComponent: React.FC = () => {
             return;
         }
         
-        // Formatage de la date d'expiration
+        // Format the expiration date
         if (name === 'expiryDate') {
             const sanitizedValue = value.replace(/\D/g, '').slice(0, 4);
             
@@ -254,7 +254,7 @@ const PaymentComponent: React.FC = () => {
             return;
         }
         
-        // Formatage du CVV (3 chiffres max)
+        // Format the CVV (3 numbers max)
         if (name === 'cvv') {
             const sanitizedValue = value.replace(/\D/g, '').slice(0, 3);
             setPaymentDetails(prevDetails => ({
@@ -264,7 +264,7 @@ const PaymentComponent: React.FC = () => {
             return;
         }
         
-        // Formatage du téléphone
+        // Format the phone number
         if (name === 'phone') {
             const sanitizedValue = value.replace(/\D/g, '').slice(0, 10);
             const formattedValue = sanitizedValue.replace(/(\d{2})(?=\d)/g, '$1 ').trim();
@@ -386,21 +386,21 @@ const PaymentComponent: React.FC = () => {
         // If every Input is valid, proceed to payment :
         setIsProcessing(true);
         
-        // Création d'une fonction asynchrone pour traiter le paiement et envoyer les emails
+        // Function to process the payment and send emails
         const processPayment = async () => {
             try {
-                // Vérifier si l'utilisateur a des billets dans son panier
+                // Verify if the user has commands in their cart
                 if (user.cart && user.cart.length > 0) {
-                    // Préparer tous les billets avec leur placement
+                    // Prepare all the commands with seats
                     const commandsWithSeats = user.cart.map(item => ({
                         ...item,
                         validated: true,
                         validation_date: new Date().toISOString(),
-                        // Si seat n'existe pas, on génère un placement aléatoire
+                        // If seat doesn't exist, generate a random one
                         seat: item.seat || `${Math.floor(Math.random() * 10) + 1}-${Math.floor(Math.random() * 60) + 1}${String.fromCharCode(65 + Math.floor(Math.random() * 6))}`
                     }));
                     
-                    // Envoyer un seul email avec tous les billets
+                    // Send a single mail with all the commands
                     try {
                         const response = await fetch('http://localhost:5000/api/sendTicketConfirmation', {
                             method: 'POST',
@@ -409,11 +409,11 @@ const PaymentComponent: React.FC = () => {
                             },
                             body: JSON.stringify({
                                 email: personalInfo.email,
-                                command: commandsWithSeats // Envoyer tous les billets ensemble
+                                command: commandsWithSeats // Send all the commands together
                             }),
                         });
                         
-                        // Vérifier si la réponse est OK
+                        // Verify if the response is ok
                         if (!response.ok) {
                             const errorText = await response.text();
                             let errorJson;
@@ -428,7 +428,7 @@ const PaymentComponent: React.FC = () => {
                             const result = await response.json();
                             console.log('Email envoyé avec succès:', result);
                             
-                            // Mettre à jour les commandes dans la base de données si l'utilisateur est connecté
+                            // Update the commands in the database if the user is connected
                             if (user.email) {
                                 // Les mises à jour de la base de données seront gérées côté serveur
                                 console.log('Utilisateur connecté, mise à jour des commandes...');
@@ -439,14 +439,14 @@ const PaymentComponent: React.FC = () => {
                     }
                 }
                 
-                // Logs pour débogage
+                // Logs for debugging
                 console.log('Paiement réussi!');
                 console.log('Informations personnelles:', personalInfo);
                 console.log('Détails de paiement:', paymentDetails);
                 console.log('Réduction appliquée:', promoApplied ? '10€' : 'Aucune');
                 console.log('Email envoyé à:', personalInfo.email);
                 
-                // Navigation vers la page d'accueil
+                // Redirect towards the home page
                 navigate('/');
             } catch (error) {
                 console.error("Erreur lors du traitement du paiement:", error);
@@ -454,7 +454,7 @@ const PaymentComponent: React.FC = () => {
             }
         };
         
-        // Attente de 2 secondes pour simuler le traitement du paiement
+        // Wait 2 seconds simulate the payment process
         setTimeout(() => {
             processPayment();
         }, 2000);
@@ -462,7 +462,7 @@ const PaymentComponent: React.FC = () => {
         setErrors({});
     };
 
-    // Détermine le type de carte en fonction du numéro
+    // Determine the type of the card depending on the starting numbers
     const getCardType = (cardNumber: string): string => {
         const cleanNumber = cardNumber.replace(/\D/g, '');
         
@@ -505,7 +505,7 @@ const PaymentComponent: React.FC = () => {
                                         return (
                                             <>
                                                 {journeys.oneway.map((item, index) => {
-                                                    // Chercher un billet retour correspondant
+                                                    // Search for a return trip
                                                     const returnTicket = journeys.return && journeys.return.length > 0 
                                                         ? journeys.return.find(
                                                             r => r.travel_info.departure === item.travel_info.arrival && 
@@ -533,7 +533,7 @@ const PaymentComponent: React.FC = () => {
                                                                 </div>
                                                             )}
                                                             
-                                                            {/* Afficher le billet retour juste en dessous s'il existe */}
+                                                            {/* Show the return trip below if it exists */}
                                                             {returnTicket && (
                                                                 <div className="return-ticket">
                                                                     <div className="summary-item-type return-type">Retour</div>
@@ -557,7 +557,7 @@ const PaymentComponent: React.FC = () => {
                                                     );
                                                 })}
                                                 
-                                                {/* Afficher les billets retour qui n'ont pas été associés à un aller */}
+                                                {/* Show the return trips that didn't have an associated one way trip */}
                                                 {journeys.return && journeys.return.length > 0 && journeys.return
                                                     .filter(r => !journeys.oneway.some(
                                                         o => o.travel_info.departure === r.travel_info.arrival && 

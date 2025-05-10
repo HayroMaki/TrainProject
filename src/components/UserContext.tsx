@@ -3,7 +3,6 @@ import User from "../interfaces/User.tsx";
 import Command from "../interfaces/Command.tsx";
 import {Header} from "./Header.tsx";
 
-// Définition du type pour le contexte User :
 interface UserContextType {
     user: User;
     connected: boolean;
