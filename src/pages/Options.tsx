@@ -46,47 +46,47 @@ class TravelOptions extends Component<{ travel: Travel, selectedOptions: Option[
 export const Options = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { cart } = location.state || { cart: [] };
-    const [selectedOptionsPerTravel, setSelectedOptionsPerTravel] = useState(() => {
-        const initialOptions = {};
-        cart.forEach((travel, index: number) => {
-            initialOptions[index] = travel.options || [];
+    const { cart } = location.state as { cart: Travel[] } || { cart: [] as Travel[] };
+    
+    const [selectedOptionsPerTravel, setSelectedOptionsPerTravel] = useState<Record<number, Option[]>>(() => {
+        const initialOptions: Record<number, Option[]> = {};
+        cart.forEach((_: Travel, index: number) => {
+            initialOptions[index] = [];
         });
         return initialOptions;
-    });
+    }); 
 
-    const handleOptionChange = (travelIndex, option: Option) => {
-        setSelectedOptionsPerTravel((prev) => {
-            const updatedOptions = { ...prev };
-            if (updatedOptions[travelIndex].includes(option)) {
+    const handleOptionChange = (travelIndex: number, option: Option): void => {
+        setSelectedOptionsPerTravel((prev: Record<number, Option[]>) => {
+            const updatedOptions: Record<number, Option[]> = { ...prev };
+            if (updatedOptions[travelIndex]?.includes(option)) {
                 updatedOptions[travelIndex] = updatedOptions[travelIndex].filter((opt: Option) => opt !== option);
             } else {
-                updatedOptions[travelIndex] = [...updatedOptions[travelIndex], option];
+                updatedOptions[travelIndex] = [...(updatedOptions[travelIndex] || []), option];
             }
             return updatedOptions;
         });
     };
 
-    const calculateTotalPrice = (cart, selectedOptionsPerTravel) => {
-        return cart.reduce((total, travel, index) => {
-            const optionsPrice = (selectedOptionsPerTravel[index] || []).reduce((sum, option) => {
+    const calculateTotalPrice = (cart: Travel[], selectedOptionsPerTravel: Record<number, Option[]>): number => {
+        return cart.reduce((total: number, travel: Travel, index: number) => {
+            const optionsPrice = (selectedOptionsPerTravel[index] || []).reduce((sum: number, option: Option) => {
                 return sum + optionPrices[option];
             }, 0);
             return total + travel.price + optionsPrice;
         }, 0);
     };
 
-    const handleValidate = () => {
-        const updatedCart = cart.map((travel, index: number) => ({
-            validated: false, // By default, the command is not valid
-            validation_date: null, // No valid date at the start
-            options: selectedOptionsPerTravel[index] || [], // Selected options
-            travel_info: travel, // Information about the travel
-            seat: "" // Empty seat, will be selected later
+    const handleValidate = (): void => {
+        const updatedCart = cart.map((travel: Travel, index: number) => ({
+            validated: false,
+            validation_date: null,
+            options: selectedOptionsPerTravel[index] || [],
+            travel_info: travel,
+            seat: ""
         }));
 
-        console.log("Updated Cart (Command):", updatedCart); // Debugging
-        // Redirect to the seat selection page
+        console.log("Updated Cart (Command):", updatedCart);
         navigate('/seat-selection', { state: { cart: updatedCart } });
     };
 
@@ -99,12 +99,12 @@ export const Options = () => {
 
             <div className="options-list">
                 {cart.length > 0 ? (
-                    cart.map((travel, index) => (
+                    cart.map((travel: Travel, index: number) => (
                         <TravelOptions
                             key={index}
                             travel={travel}
                             selectedOptions={selectedOptionsPerTravel[index] || []}
-                            onOptionChange={(option) => handleOptionChange(index, option)}
+                            onOptionChange={(option: Option) => handleOptionChange(index, option)}
                         />
                     ))
                 ) : (
