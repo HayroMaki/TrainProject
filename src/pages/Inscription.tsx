@@ -17,7 +17,7 @@ export const Inscription = () => {
 
     const apiBase = location.hostname === "localhost"
         ? "http://localhost:5000"
-        : "https://" + location.hostname;
+        : "https://swiftrail.onrender.com";
 
     const mailRegex = /^[\w.]+@\w+\.\w+/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{12,}$/;

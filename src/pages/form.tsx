@@ -26,7 +26,7 @@ export const Form = () => {
 
     const apiBase = location.hostname === "localhost"
         ? "http://localhost:5000"
-        : "https://" + location.hostname;
+        : "https://swiftrail.onrender.com";
 
     // Handler for the image errors
     const handleImageError = (index: number) => {

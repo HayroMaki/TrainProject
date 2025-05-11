@@ -5,7 +5,7 @@ import Travel from "../interfaces/Travel.tsx";
 
 const apiBase = location.hostname === "localhost"
     ? "http://localhost:5000"
-    : "https://" + location.hostname;
+    : "https://swiftrail.onrender.com";
 
 /**
  * Utility function to format the date

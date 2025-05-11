@@ -14,7 +14,7 @@ export const Connection = () => {
 
     const apiBase = location.hostname === "localhost"
         ? "http://localhost:5000"
-        : "https://" + location.hostname;
+        : "https://swiftrail.onrender.com";
 
     let email: HTMLInputElement;
     let password: HTMLInputElement;
