@@ -3,6 +3,10 @@ import "../stylesheets/payment.css";
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from '../components/UserContext';
 
+const apiBase = location.hostname === "localhost"
+    ? "http://localhost:5000"
+    : "https://" + location.hostname;
+
 // Simple interfaces
 interface PersonalInfo {
     civility: string;
@@ -402,7 +406,7 @@ const PaymentComponent: React.FC = () => {
                     
                     // Send a single mail with all the commands
                     try {
-                        const response = await fetch('${location.hostname}/api/sendTicketConfirmation', {
+                        const response = await fetch(`${apiBase}/api/sendTicketConfirmation`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',

@@ -3,6 +3,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './../stylesheets/Travels.css';
 import Travel from "../interfaces/Travel.tsx";
 
+const apiBase = location.hostname === "localhost"
+    ? "http://localhost:5000"
+    : "https://" + location.hostname;
+
 /**
  * Utility function to format the date
  * @param dateString - The date string to format
@@ -229,7 +233,7 @@ export const Travels = () => {
                         date: departureDate
                     }).toString();
 
-                    const response = await fetch(`${location.hostname}/api/getTravels?${queryParams}`);
+                    const response = await fetch(`${apiBase}/api/getTravels?${queryParams}`);
                     const data = await response.json();
                     setTravels(data);
                     console.log("Aller travels:", data);
@@ -244,7 +248,7 @@ export const Travels = () => {
 
                         console.log("Return query params:", returnQueryParams);
 
-                        const returnResponse = await fetch(`${location.hostname}/api/getTravels?${returnQueryParams}`);
+                        const returnResponse = await fetch(`${apiBase}/api/getTravels?${returnQueryParams}`);
                         const returnData = await returnResponse.json();
                         setReturnTravels(returnData);
                         console.log("Return travels:", returnData);

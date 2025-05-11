@@ -12,6 +12,10 @@ export const Connection = () => {
     const mailRegex = /^[\w.]+@\w+\.\w+/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{12,}$/;
 
+    const apiBase = location.hostname === "localhost"
+        ? "http://localhost:5000"
+        : "https://" + location.hostname;
+
     let email: HTMLInputElement;
     let password: HTMLInputElement;
 
@@ -40,7 +44,7 @@ export const Connection = () => {
         // Check if the user exists
         const checkUser = async (mail: string, pwd: string) => {
             try {
-                const response = await fetch(`${location.hostname}/api/checkUser`, {
+                const response = await fetch(`${apiBase}/api/checkUser`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

@@ -23,7 +23,11 @@ export const Form = () => {
 
     // Fallback image
     const fallbackImage = "https://images.unsplash.com/photo-1513805549689-48b5fb3b77fb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80";
-    
+
+    const apiBase = location.hostname === "localhost"
+        ? "http://localhost:5000"
+        : "https://" + location.hostname;
+
     // Handler for the image errors
     const handleImageError = (index: number) => {
         setFailedImages({...failedImages, [index]: true});
@@ -212,7 +216,7 @@ export const Form = () => {
         };
 
         // Sending the information to database
-        await fetch(`${location.hostname}/api/insertTravels`, {
+        await fetch(`${apiBase}/api/insertTravels`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ data: formData }),

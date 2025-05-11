@@ -15,6 +15,10 @@ export const Inscription = () => {
     });
     const [errorMessage, setErrorMessage] = useState("");
 
+    const apiBase = location.hostname === "localhost"
+        ? "http://localhost:5000"
+        : "https://" + location.hostname;
+
     const mailRegex = /^[\w.]+@\w+\.\w+/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{12,}$/;
 
@@ -114,7 +118,7 @@ export const Inscription = () => {
 
         const insertUser = async (fname: string, lname: string, mail: string, pwd: string) => {
             try {
-                const response = await fetch(`${location.hostname}/api/insertClient`, {
+                const response = await fetch(`${apiBase}/api/insertClient`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",

@@ -8,7 +8,7 @@ import { main } from "./mailer.js";
 dotenv.config();
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.port || 5000;
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
 
 // Middleware
