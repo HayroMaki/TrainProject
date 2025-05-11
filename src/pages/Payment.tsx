@@ -402,7 +402,7 @@ const PaymentComponent: React.FC = () => {
                     
                     // Send a single mail with all the commands
                     try {
-                        const response = await fetch('http://localhost:5000/api/sendTicketConfirmation', {
+                        const response = await fetch('${location.hostname}/api/sendTicketConfirmation', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',

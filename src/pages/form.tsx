@@ -212,7 +212,7 @@ export const Form = () => {
         };
 
         // Sending the information to database
-        await fetch("http://localhost:5000/api/insertTravels", {
+        await fetch(`${location.hostname}/api/insertTravels`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ data: formData }),

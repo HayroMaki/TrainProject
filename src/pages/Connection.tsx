@@ -40,7 +40,7 @@ export const Connection = () => {
         // Check if the user exists
         const checkUser = async (mail: string, pwd: string) => {
             try {
-                const response = await fetch(`http://localhost:5000/api/checkUser`, {
+                const response = await fetch(`${location.hostname}/api/checkUser`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

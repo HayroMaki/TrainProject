@@ -114,7 +114,7 @@ export const Inscription = () => {
 
         const insertUser = async (fname: string, lname: string, mail: string, pwd: string) => {
             try {
-                const response = await fetch(`http://localhost:5000/api/insertClient`, {
+                const response = await fetch(`${location.hostname}/api/insertClient`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",

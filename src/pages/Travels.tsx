@@ -137,9 +137,9 @@ class Cart extends Component<{ cart: Travel[], onRemoveFromCart: (index: number)
  * to add it to their cart.
  */
 export const Travels = () => {
-    const location = useLocation();
+    const locationHook = useLocation();
     const navigate = useNavigate();
-    const formData = location.state?.formData;
+    const formData = locationHook.state?.formData;
     const [travels, setTravels] = useState<Travel[]>([]);
     const [returnTravels, setReturnTravels] = useState<Travel[]>([]);
     const [loading, setLoading] = useState(true);
@@ -229,7 +229,7 @@ export const Travels = () => {
                         date: departureDate
                     }).toString();
 
-                    const response = await fetch(`http://localhost:5000/api/getTravels?${queryParams}`);
+                    const response = await fetch(`${location.hostname}/api/getTravels?${queryParams}`);
                     const data = await response.json();
                     setTravels(data);
                     console.log("Aller travels:", data);
@@ -244,7 +244,7 @@ export const Travels = () => {
 
                         console.log("Return query params:", returnQueryParams);
 
-                        const returnResponse = await fetch(`http://localhost:5000/api/getTravels?${returnQueryParams}`);
+                        const returnResponse = await fetch(`${location.hostname}/api/getTravels?${returnQueryParams}`);
                         const returnData = await returnResponse.json();
                         setReturnTravels(returnData);
                         console.log("Return travels:", returnData);
