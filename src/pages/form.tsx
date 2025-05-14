@@ -266,6 +266,8 @@ export const Form = () => {
                 </div>
 
                 <form className="form-container" onSubmit={handleSubmit}>
+                    {/* Display error messages if any */}
+                    {error && <p className="error-message">{error}</p>}
             {/* Buttons to select trip type (one-way or round trip) */}
                     <div className="row-container">
                 <button
@@ -346,9 +348,6 @@ export const Form = () => {
                     />
                 </div>
             </div>
-
-            {/* Display error messages if any */}
-                    {error && <p className="error-message">{error}</p>}
 
             {/* Submit button */}
                     <button className="submit-button" type="submit">Rechercher</button>
