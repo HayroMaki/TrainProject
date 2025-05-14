@@ -5,14 +5,6 @@ export const Inscription = () => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [formValid, setFormValid] = useState({
-        fname: true,
-        lname: true,
-        email: true,
-        confirmemail: true,
-        password: true,
-        confirmpassword: true
-    });
     const [errorMessage, setErrorMessage] = useState("");
 
     const apiBase = location.hostname === "localhost"
@@ -39,9 +31,9 @@ export const Inscription = () => {
     })
 
     // Visual indicators of when the input is correct
-    function checkCondition(e:ChangeEvent<HTMLInputElement>, condition: Function, field: string) {
-        const isValid = condition(e.target.value);
-        setFormValid({...formValid, [field]: isValid});
+    function checkCondition(e:ChangeEvent<HTMLInputElement>, condition: Function) {
+        const value = e.target.value.trim();
+        const isValid = condition(value);
         
         if (isValid) {
             e.currentTarget.classList.remove('is-invalid')
@@ -52,20 +44,8 @@ export const Inscription = () => {
         }
     }
 
-    function checkTextInput(e:ChangeEvent<HTMLInputElement>) {
-        const value = e.target.value.trim();
-        const isValid = value.length > 0;
-        const field = e.target.id;
-        
-        setFormValid({...formValid, [field]: isValid});
-        
-        if (isValid) {
-            e.currentTarget.classList.remove('is-invalid')
-            e.currentTarget.classList.add('is-valid');
-        } else {
-            e.currentTarget.classList.add('is-invalid');
-            e.currentTarget.classList.remove('is-valid');
-        }
+    function textCondition(value: string) {
+        return value.length > 0;
     }
 
     function emailCondition(value: string) {
@@ -87,14 +67,6 @@ export const Inscription = () => {
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setErrorMessage("");
-        
-        // Verifies all of the fields
-        const isValid = Object.values(formValid).every(value => value);
-        
-        if (!isValid) {
-            setErrorMessage("Veuillez corriger les erreurs dans le formulaire");
-            return;
-        }
         
         if (!emailCondition(email.value)) {
             setErrorMessage("Veuillez entrer une adresse email valide");
@@ -178,7 +150,7 @@ export const Inscription = () => {
                             type="text" 
                             id="fname" 
                             placeholder="Votre prénom" 
-                            onChange={checkTextInput}
+                            onChange={(e) => checkCondition(e, textCondition)}
                             required 
                         />
                     </div>
@@ -192,7 +164,7 @@ export const Inscription = () => {
                             type="text" 
                             id="lname" 
                             placeholder="Votre nom" 
-                            onChange={checkTextInput}
+                            onChange={(e) => checkCondition(e, textCondition)}
                             required 
                         />
                     </div>
@@ -206,7 +178,7 @@ export const Inscription = () => {
                             type="email" 
                             id="email" 
                             placeholder="exemple@mail.com"
-                            onChange={(e) => checkCondition(e, emailCondition, "email")}
+                            onChange={(e) => checkCondition(e, emailCondition)}
                             required 
                         />
                     </div>
@@ -220,12 +192,9 @@ export const Inscription = () => {
                             type="email" 
                             id="confirmemail" 
                             placeholder="exemple@mail.com"
-                            onChange={(e) => checkCondition(e, confirmemailCondition, "confirmemail")}
+                            onChange={(e) => checkCondition(e, confirmemailCondition)}
                             required 
                         />
-                        {!formValid.confirmemail && (
-                            <div className="validation-error">Les adresses email doivent correspondre</div>
-                        )}
                     </div>
                     
                     <div className="form-group">
@@ -239,7 +208,7 @@ export const Inscription = () => {
                                 id="password" 
                                 placeholder="Votre mot de passe" 
                                 minLength={12}
-                                onChange={(e) => checkCondition(e, passwordCondition, "password")}
+                                onChange={(e) => checkCondition(e, passwordCondition)}
                                 required 
                             />
                             <span 
@@ -265,7 +234,7 @@ export const Inscription = () => {
                                 id="confirmpassword" 
                                 placeholder="Confirmez votre mot de passe" 
                                 minLength={12}
-                                onChange={(e) => checkCondition(e, confirmpasswordCondition, "confirmpassword")}
+                                onChange={(e) => checkCondition(e, confirmpasswordCondition)}
                                 required 
                             />
                             <span 
@@ -275,9 +244,6 @@ export const Inscription = () => {
                                 {showConfirmPassword ? "👁️" : "👁️‍🗨️"}
                             </span>
                         </div>
-                        {!formValid.confirmpassword && (
-                            <div className="validation-error">Les mots de passe doivent correspondre</div>
-                        )}
                     </div>
                     
                     <button className="Connection-form-submit" type="submit">
