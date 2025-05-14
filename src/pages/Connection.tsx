@@ -32,12 +32,12 @@ export const Connection = () => {
         setErrorMessage("");
         
         if (!mailRegex.test(email.value)) {
-            setErrorMessage("Veuillez entrer une adresse email valide");
+            setErrorMessage("Email ou mot de passe incorrect");
             return;
         }
         
         if (!passwordRegex.test(password.value)) {
-            setErrorMessage("Le mot de passe doit contenir au moins 12 caractères, dont une majuscule, une minuscule et un chiffre");
+            setErrorMessage("Email ou mot de passe incorrect");
             return;
         }
 
@@ -116,8 +116,7 @@ export const Connection = () => {
                                 className="Connection-form-input" 
                                 type={showPassword ? "text" : "password"}
                                 id="password" 
-                                placeholder="Votre mot de passe" 
-                                minLength={12} 
+                                placeholder="Votre mot de passe"
                                 required
                             />
                             <span 
@@ -126,9 +125,6 @@ export const Connection = () => {
                             >
                                 {showPassword ? "👁️" : "👁️‍🗨️"}
                             </span>
-                        </div>
-                        <div className="input-hint">
-                            Minimum 12 caractères, avec majuscule, minuscule et chiffre
                         </div>
                     </div>
                     
