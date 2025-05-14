@@ -12,7 +12,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1552423310-ba49a31e2ade?q=80&w=2071&auto=format&fit=crop');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://www.tripsavvy.com/thmb/pb6WnFR-nnPAUACPfOsz259QSNM=/2304x1296/filters:fill(auto,1)/france-paris-eifel-eifeltower_t20_PoB82N-6ac7950708574b1bab692f29cbe4f552.jpg');
     background-size: cover;
     background-position: center;
     color: var(--white);
