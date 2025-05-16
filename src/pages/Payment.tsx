@@ -79,6 +79,8 @@ const PaymentComponent: React.FC = () => {
     const [promoApplied, setPromoApplied] = useState<boolean>(false);
     const [promoCode, setPromoCode] = useState<string>('');
     const [receiveNewsletter, setReceiveNewsletter] = useState<boolean>(false);
+    const [paymentComplete, setPaymentComplete] = useState<boolean>(false);
+    const [paymentResponse, setPaymentResponse] = useState<any>(null);
     
     // Verify if the cart is empty and redirect if necessary
     useEffect(() => {
@@ -401,7 +403,9 @@ const PaymentComponent: React.FC = () => {
                         validated: true,
                         validation_date: new Date().toISOString(),
                         // If seat doesn't exist, generate a random one
-                        seat: item.seat || `${Math.floor(Math.random() * 10) + 1}-${Math.floor(Math.random() * 60) + 1}${String.fromCharCode(65 + Math.floor(Math.random() * 6))}`
+                        seat: item.seat || `${Math.floor(Math.random() * 10) + 1}-${Math.floor(Math.random() * 60) + 1}${String.fromCharCode(65 + Math.floor(Math.random() * 6))}`,
+                        // Ajouter l'email de l'utilisateur connecté ou celui saisi dans le formulaire
+                        email: user.email || personalInfo.email
                     }));
                     
                     // Send a single mail with all the commands
@@ -434,12 +438,18 @@ const PaymentComponent: React.FC = () => {
                             
                             // Update the commands in the database if the user is connected
                             if (user.email) {
-                                // Les mises à jour de la base de données seront gérées côté serveur
                                 console.log('Utilisateur connecté, mise à jour des commandes...');
                             }
+
+                            // Store the response data for display
+                            setPaymentResponse(result);
+                            // Indicate that the payment is finished
+                            setPaymentComplete(true);
+                            setActiveStep(3); // Add a step for the payment summary
                         }
                     } catch (error) {
                         console.error("Erreur lors de l'envoi de l'email:", error);
+                        alert('Une erreur est survenue lors de l\'envoi de l\'email de confirmation. Veuillez nous contacter.');
                     }
                 }
                 
@@ -450,11 +460,12 @@ const PaymentComponent: React.FC = () => {
                 console.log('Réduction appliquée:', promoApplied ? '10€' : 'Aucune');
                 console.log('Email envoyé à:', personalInfo.email);
                 
-                // Redirect towards the home page
-                navigate('/');
+                // Do not redirect immediately to allow the display of the summary
+                // navigate('/');
             } catch (error) {
                 console.error("Erreur lors du traitement du paiement:", error);
                 setIsProcessing(false);
+                alert('Une erreur est survenue lors du traitement de votre paiement. Veuillez réessayer.');
             }
         };
         
@@ -488,10 +499,19 @@ const PaymentComponent: React.FC = () => {
                     <div className="step-label">Informations personnelles</div>
                 </div>
                 <div className="stepper-line"></div>
-                <div className={`stepper-step ${activeStep === 2 ? 'active' : ''}`}>
+                <div className={`stepper-step ${activeStep === 2 ? 'active' : ''} ${activeStep > 2 ? 'completed' : ''}`}>
                     <div className="step-number">2</div>
                     <div className="step-label">Paiement</div>
                 </div>
+                {paymentComplete && (
+                    <>
+                        <div className="stepper-line"></div>
+                        <div className={`stepper-step ${activeStep === 3 ? 'active' : ''}`}>
+                            <div className="step-number">3</div>
+                            <div className="step-label">Confirmation</div>
+                        </div>
+                    </>
+                )}
             </div>
             
             <div className="payment-content">
@@ -967,6 +987,40 @@ const PaymentComponent: React.FC = () => {
                             <p>Un email contenant vos billets au format PDF sera envoyé à <strong>{personalInfo.email}</strong> après validation du paiement.</p>
                 </div>
             </form>
+                )}
+                
+                {activeStep === 3 && paymentComplete && paymentResponse && (
+                    <div className="payment-confirmation">
+                        <div className="confirmation-header">
+                            <div className="success-icon">✓</div>
+                            <h2>Paiement réussi !</h2>
+                            <p>Vos billets ont été envoyés à <strong>{personalInfo.email}</strong></p>
+                        </div>
+                        
+                        <div className="confirmation-details">
+                            <div className="order-summary">
+                                <h3>Récapitulatif de votre commande</h3>
+                                <p>Votre paiement a été traité avec succès et vos billets ont été enregistrés.</p>
+                                <p>Un email de confirmation contenant tous les détails de votre réservation vous a été envoyé.</p>
+                                <div className="order-info">
+                                    <p><strong>Email:</strong> {personalInfo.email}</p>
+                                    <p><strong>Date d'achat:</strong> {new Date().toLocaleDateString('fr-FR')}</p>
+                                    <p><strong>Montant total:</strong> {getPriceDetails().grandTotal}€</p>
+                                    <p><strong>Moyen de paiement:</strong> Carte bancaire •••• {paymentDetails.cardNumber.slice(-4)}</p>
+                                </div>
+                            </div>
+                                                        
+                            <div className="confirmation-actions">
+                                <button 
+                                    type="button" 
+                                    className="continue-btn"
+                                    onClick={() => navigate('/')}
+                                >
+                                    Retour à l'accueil
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 )}
             </div>
         </div>

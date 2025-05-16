@@ -86,7 +86,7 @@ const Ticket: React.FC<TicketProps> = ({ command, index, removeOption, removeIte
                             <div className="city">{command.travel_info.arrival}</div>
                             <div className="time">
                                 {(() => {
-                                    // Calcule l'heure d'arrivée approximative
+                                    // Computate arrival hours
                                     const [hours, minutes] = command.travel_info.time.split(':').map(Number);
                                     const totalMinutes = hours * 60 + minutes + command.travel_info.length;
                                     const arrivalHours = Math.floor(totalMinutes / 60) % 24;
